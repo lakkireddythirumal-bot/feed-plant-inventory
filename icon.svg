@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2b48" />
+      <stop offset="50%" stop-color="#091b2c" />
+      <stop offset="100%" stop-color="#05101c" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="plantGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="50%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#6ee7b7" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+  
+  <!-- Subtle border accent -->
+  <rect x="2" y="2" width="508" height="508" rx="106" fill="none" stroke="#25537b" stroke-width="4" stroke-opacity="0.5" />
+
+  <!-- Industrial Silo & Feed Plant Graphic -->
+  <g filter="url(#shadow)" transform="translate(64, 60)">
+    <!-- Silo 1 -->
+    <rect x="50" y="140" width="80" height="180" rx="16" fill="#1b4263" />
+    <path d="M50 140 Q90 90 130 140 Z" fill="#2d6a9f" />
+    <line x1="90" y1="150" x2="90" y2="310" stroke="#0e2a40" stroke-width="4" stroke-dasharray="10 8" />
+
+    <!-- Silo 2 (Center, Taller) -->
+    <rect x="152" y="100" width="90" height="220" rx="18" fill="#23527a" />
+    <path d="M152 100 Q197 45 242 100 Z" fill="url(#glowGrad)" />
+    <line x1="197" y1="110" x2="197" y2="310" stroke="#12334d" stroke-width="5" stroke-dasharray="12 10" />
+
+    <!-- Silo 3 -->
+    <rect x="264" y="150" width="76" height="170" rx="16" fill="#1b4263" />
+    <path d="M264 150 Q302 105 340 150 Z" fill="#2d6a9f" />
+    <line x1="302" y1="160" x2="302" y2="310" stroke="#0e2a40" stroke-width="4" stroke-dasharray="10 8" />
+
+    <!-- Connecting Pipe Bridge -->
+    <rect x="70" y="190" width="250" height="12" rx="4" fill="#3b82f6" opacity="0.8" />
+
+    <!-- Feed Grain Sprout in foreground -->
+    <g transform="translate(197, 240)">
+      <path d="M0,60 C-30,20 -40,-40 0,-70 C40,-40 30,20 0,60 Z" fill="url(#plantGrad)" />
+      <path d="M0,50 C-45,10 -60,-25 -20,-50 C-10,-20 -5,20 0,50 Z" fill="#059669" opacity="0.9" />
+      <path d="M0,50 C45,10 60,-25 20,-50 C10,-20 5,20 0,50 Z" fill="#34d399" />
+      <path d="M0,60 L0,-65" stroke="#ecfdf5" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- Base conveyor foundation -->
+    <rect x="30" y="315" width="330" height="24" rx="8" fill="#143149" />
+    <circle cx="80" cy="327" r="5" fill="#38bdf8" />
+    <circle cx="140" cy="327" r="5" fill="#38bdf8" />
+    <circle cx="200" cy="327" r="5" fill="#34d399" />
+    <circle cx="260" cy="327" r="5" fill="#38bdf8" />
+    <circle cx="320" cy="327" r="5" fill="#38bdf8" />
+  </g>
+</svg>
