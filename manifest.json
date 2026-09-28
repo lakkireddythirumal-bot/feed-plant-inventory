@@ -1,0 +1,9 @@
+{
+  "name": "Feed Plant Manager Dashboard",
+  "short_name": "Manager Dashboard",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f8",
+  "theme_color": "#f5f6f8",
+  "description": "Feed Plant Manager Dashboard"
+}
