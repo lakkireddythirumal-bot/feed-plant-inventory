@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#f5f6f8">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Feed Plant">
 <link rel="manifest" href="./manifest.json">
-<title>Manager Dashboard</title>
+<title>Feed Plant Control Center</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f5f6f8;color:#202938;padding-bottom:82px}
@@ -327,6 +329,127 @@ body{overflow-x:hidden;-webkit-tap-highlight-color:transparent}
   .stock-row>span:last-child{font-size:8.3px !important}
 }
 </style>
+
+<style id="world-class-pwa-v1">
+:root{
+  --bg:#06111d;--bg2:#091827;--card:#0d1d2d;--card2:#102438;
+  --line:#1d3449;--text:#edf5ff;--muted:#8da1b6;--blue:#1683ff;
+  --blue2:#0d6efd;--green:#21d07a;--yellow:#ffc83d;--red:#ff5c68;
+  --purple:#8c72ff;--cyan:#35bfff;--shadow:0 10px 28px rgba(0,0,0,.28);
+}
+html,body{background:var(--bg)!important;color:var(--text)!important}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  padding-bottom:88px!important;letter-spacing:.01em;
+}
+.container{max-width:760px!important;padding:12px 12px 22px!important}
+.header{margin:2px 2px 10px!important;gap:10px}
+.smart-greeting{color:#6f89a2!important;font-size:9px!important;letter-spacing:.7px!important}
+.smart-title{gap:6px!important}
+.smart-title h1,.header h1{font-size:21px!important;color:#f5f9ff!important;letter-spacing:-.45px}
+.header p{color:var(--muted)!important;font-size:11px!important}
+.selected-date-chip{background:#102b49!important;color:#56aaff!important;border:1px solid #174a78}
+.header-actions{gap:5px!important}
+.header-tool,.notify-btn,.plant{
+  background:#0d2033!important;color:#dcecff!important;border:1px solid #1b3851!important;
+  box-shadow:none!important
+}
+.plant{font-size:18px!important}
+.status-line{
+  background:#0b1a29;border:1px solid #183047;border-radius:12px;padding:7px 9px;
+  margin-bottom:9px!important;color:#8da1b6!important
+}
+.status-dot{background:var(--green)!important;box-shadow:0 0 9px rgba(33,208,122,.55)}
+.refresh{background:#10263b!important;color:#a9c1d8!important;border:1px solid #1d3b55}
+.date-strip-main,.date-strip button{
+  background:#0d1d2d!important;color:var(--text)!important;border:1px solid #1c354c!important;box-shadow:none!important
+}
+.date-strip-main small{color:var(--muted)!important}.date-state{color:#45a2ff!important}
+.card{
+  background:linear-gradient(145deg,#0e2031,#0b1928)!important;
+  border:1px solid #193249!important;border-radius:16px!important;
+  box-shadow:var(--shadow)!important;color:var(--text)!important;
+}
+.card-title h2{font-size:14px!important;color:#f0f6ff!important}
+.card-title span{color:#7f95aa!important;font-size:9px!important}
+.quick-grid,.mini-grid{gap:7px!important}
+.quick,.mini,.feed-total,.pp-item,.intel-item{
+  background:#102235!important;border:1px solid #1b3850!important;color:var(--text)!important;
+  border-radius:12px!important;box-shadow:none!important
+}
+.quick p,.mini p,.feed-total p,.pp-item p,.intel-item p{color:#8298ad!important}
+.quick strong,.mini strong,.feed-total strong,.pp-item strong{color:#f4f8ff!important}
+.quick{min-height:68px!important;padding:9px!important}
+.quick strong{font-size:17px!important}
+.mini strong{font-size:15px!important}
+.spark i{background:#197eea!important;opacity:.7}
+.management-status-row{gap:7px!important}
+.status-tile{
+  background:#0f2133!important;border:1px solid #1b3850!important;color:#edf5ff!important
+}
+.status-tile small{color:#8298ad!important}.status-tile span{color:#3ca1ff!important}
+.premix-total{border-top-color:#1c3348!important;color:#8197ad!important}.premix-total strong{color:#edf5ff!important}
+.feed-row,.production-row{border-bottom-color:#1b3043!important}
+.row-name{color:#e7f0f9!important}.row-right strong{color:#f4f8ff!important}.row-right small{color:#7e94a9!important}
+.stock-head{background:#102437!important;color:#8198ae!important;border-radius:8px}
+.stock-row{border-bottom-color:#1b3043!important}
+.stock-row strong,.stock-row>span{color:#e8f2fc!important}
+.stock-row .avg-under-material{color:#71879c!important}
+.stock-row>span:last-child{color:#9db2c7!important}
+.good{color:var(--green)!important}.warn{color:var(--yellow)!important}.bad{color:var(--red)!important}
+.status-symbol{background:#172a3d!important}.status-symbol.good{background:#0d3b2b!important;color:var(--green)!important}
+.status-symbol.warn{background:#3d3210!important;color:var(--yellow)!important}.status-symbol.bad{background:#401c23!important;color:var(--red)!important}
+.production-total{color:#fff!important;font-size:30px!important}
+.production-label{color:#7f95aa!important}
+.section-tabs button{
+  background:#102235!important;color:#91a7bc!important;border:1px solid #1b3850!important
+}
+.section-tabs button.active{background:var(--blue2)!important;color:#fff!important;border-color:#1683ff!important}
+.alert{background:#2b2412!important;border:1px solid #55451c!important;color:#f3df9a!important}
+.alert p{color:#f4e4ac!important}.alert small{color:#bfa65c!important}
+.trend-card{background:#0b1a29!important;border:1px solid #1b354c!important}
+.trend-header h3{color:#eaf3fc!important}.trend-header small{color:#748ca2!important}
+select,.search-input,.date-btn{
+  background:#0c1c2b!important;color:#eaf3fc!important;border:1px solid #24425c!important
+}
+select option{background:#0c1c2b;color:#fff}
+.dot{background:#30465b!important}.dot.active{background:#1683ff!important}
+.bottom-nav{
+  height:74px!important;background:rgba(6,17,29,.96)!important;
+  border-top:1px solid #1b344b!important;box-shadow:0 -10px 28px rgba(0,0,0,.28)!important;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
+}
+.nav-item{color:#71879b!important;min-width:58px!important}
+.nav-item div{font-size:18px!important}.nav-item.active{color:#168cff!important}
+.nav-item.active div{background:#0d3152;border-radius:10px;padding:2px 10px}
+.modal{background:rgba(0,0,0,.72)!important}
+.modal-box{
+  background:#0b1928!important;color:#edf5ff!important;border:1px solid #1b3850!important
+}
+.modal-head{background:#0b1928!important;border-bottom-color:#1b3043!important}
+.modal-head h2{color:#fff!important}.close{background:#10263a!important;color:#58aaff!important}
+.detail-section{background:#102235!important}.detail-row{border-bottom-color:#1d3449!important}
+.detail-row span:first-child{color:#8198ad!important}.transaction{background:#0d1d2d!important;border-color:#1b3850!important}
+.transaction-value{background:#102235!important}.transaction-value span,.small-note{color:#7890a6!important}
+.error-box{background:#341b20!important;color:#ff9da5!important}
+.badge{background:#12345a!important;color:#75baff!important}
+.report-box{background:#102235!important;color:#dbe9f6!important}
+.install{background:#1683ff!important;color:#fff!important}
+.feed-closing-strip{background:linear-gradient(135deg,#0e2438,#0d1b29)!important;border-color:#1d3a52!important}
+.feed-closing-strip small{color:#8198ad!important}.feed-closing-strip strong{color:#fff!important}
+.feed-bag-equivalent{border-left-color:#1e374e!important}.feed-closing-strip>span{color:#4aa8ff!important}
+.control-item,.action-row{background:#102235!important;border-color:#1b3850!important;color:#edf5ff!important}
+.health-strip{background:#0c3326!important;color:#50db92!important}
+.control-actions button,.clear-alerts,.more-toggle,.note-actions button{background:#102235!important;color:#d9e7f4!important;border-color:#1b3850!important}
+.control-actions button.primary,.note-actions button.primary{background:#1683ff!important;color:#fff!important}
+.note-input{background:#0b1c2b!important;color:#edf5ff!important;border-color:#24425c!important}
+@media(min-width:700px){
+  body{background:linear-gradient(120deg,#06111d,#091827)!important}
+  .container{max-width:1120px!important}
+  .card{border-radius:18px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="container">
