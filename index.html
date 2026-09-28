@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#f5f6f8">
+<meta name="theme-color" content="#06121f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Feed Plant">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="./manifest.json">
 <title>Feed Plant Control Center</title>
 <style>
@@ -330,252 +328,261 @@ body{overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 }
 </style>
 
-<style id="world-class-pwa-v1">
+<style id="feed-control-center-v4">
 :root{
-  --bg:#06111d;--bg2:#091827;--card:#0d1d2d;--card2:#102438;
-  --line:#1d3449;--text:#edf5ff;--muted:#8da1b6;--blue:#1683ff;
-  --blue2:#0d6efd;--green:#21d07a;--yellow:#ffc83d;--red:#ff5c68;
-  --purple:#8c72ff;--cyan:#35bfff;--shadow:0 10px 28px rgba(0,0,0,.28);
+ --bg:#06121f;--bg2:#081a2a;--panel:#0b2235;--panel2:#0e2940;--line:#173a52;
+ --text:#f4f8fb;--muted:#8ca2b4;--blue:#1599ff;--cyan:#18c9df;--green:#20d17c;
+ --amber:#ffbd28;--red:#ff4d5c;--purple:#9c62ff;--orange:#ff824e;
 }
-html,body{background:var(--bg)!important;color:var(--text)!important}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
-  padding-bottom:88px!important;letter-spacing:.01em;
-}
-.container{max-width:760px!important;padding:12px 12px 22px!important}
-.header{margin:2px 2px 10px!important;gap:10px}
-.smart-greeting{color:#6f89a2!important;font-size:9px!important;letter-spacing:.7px!important}
-.smart-title{gap:6px!important}
-.smart-title h1,.header h1{font-size:21px!important;color:#f5f9ff!important;letter-spacing:-.45px}
-.header p{color:var(--muted)!important;font-size:11px!important}
-.selected-date-chip{background:#102b49!important;color:#56aaff!important;border:1px solid #174a78}
-.header-actions{gap:5px!important}
-.header-tool,.notify-btn,.plant{
-  background:#0d2033!important;color:#dcecff!important;border:1px solid #1b3851!important;
-  box-shadow:none!important
-}
-.plant{font-size:18px!important}
-.status-line{
-  background:#0b1a29;border:1px solid #183047;border-radius:12px;padding:7px 9px;
-  margin-bottom:9px!important;color:#8da1b6!important
-}
-.status-dot{background:var(--green)!important;box-shadow:0 0 9px rgba(33,208,122,.55)}
-.refresh{background:#10263b!important;color:#a9c1d8!important;border:1px solid #1d3b55}
-.date-strip-main,.date-strip button{
-  background:#0d1d2d!important;color:var(--text)!important;border:1px solid #1c354c!important;box-shadow:none!important
-}
-.date-strip-main small{color:var(--muted)!important}.date-state{color:#45a2ff!important}
-.card{
-  background:linear-gradient(145deg,#0e2031,#0b1928)!important;
-  border:1px solid #193249!important;border-radius:16px!important;
-  box-shadow:var(--shadow)!important;color:var(--text)!important;
-}
-.card-title h2{font-size:14px!important;color:#f0f6ff!important}
-.card-title span{color:#7f95aa!important;font-size:9px!important}
-.quick-grid,.mini-grid{gap:7px!important}
-.quick,.mini,.feed-total,.pp-item,.intel-item{
-  background:#102235!important;border:1px solid #1b3850!important;color:var(--text)!important;
-  border-radius:12px!important;box-shadow:none!important
-}
-.quick p,.mini p,.feed-total p,.pp-item p,.intel-item p{color:#8298ad!important}
-.quick strong,.mini strong,.feed-total strong,.pp-item strong{color:#f4f8ff!important}
-.quick{min-height:68px!important;padding:9px!important}
-.quick strong{font-size:17px!important}
-.mini strong{font-size:15px!important}
-.spark i{background:#197eea!important;opacity:.7}
-.management-status-row{gap:7px!important}
-.status-tile{
-  background:#0f2133!important;border:1px solid #1b3850!important;color:#edf5ff!important
-}
-.status-tile small{color:#8298ad!important}.status-tile span{color:#3ca1ff!important}
-.premix-total{border-top-color:#1c3348!important;color:#8197ad!important}.premix-total strong{color:#edf5ff!important}
-.feed-row,.production-row{border-bottom-color:#1b3043!important}
-.row-name{color:#e7f0f9!important}.row-right strong{color:#f4f8ff!important}.row-right small{color:#7e94a9!important}
-.stock-head{background:#102437!important;color:#8198ae!important;border-radius:8px}
-.stock-row{border-bottom-color:#1b3043!important}
-.stock-row strong,.stock-row>span{color:#e8f2fc!important}
-.stock-row .avg-under-material{color:#71879c!important}
-.stock-row>span:last-child{color:#9db2c7!important}
-.good{color:var(--green)!important}.warn{color:var(--yellow)!important}.bad{color:var(--red)!important}
-.status-symbol{background:#172a3d!important}.status-symbol.good{background:#0d3b2b!important;color:var(--green)!important}
-.status-symbol.warn{background:#3d3210!important;color:var(--yellow)!important}.status-symbol.bad{background:#401c23!important;color:var(--red)!important}
-.production-total{color:#fff!important;font-size:30px!important}
-.production-label{color:#7f95aa!important}
-.section-tabs button{
-  background:#102235!important;color:#91a7bc!important;border:1px solid #1b3850!important
-}
-.section-tabs button.active{background:var(--blue2)!important;color:#fff!important;border-color:#1683ff!important}
-.alert{background:#2b2412!important;border:1px solid #55451c!important;color:#f3df9a!important}
-.alert p{color:#f4e4ac!important}.alert small{color:#bfa65c!important}
-.trend-card{background:#0b1a29!important;border:1px solid #1b354c!important}
-.trend-header h3{color:#eaf3fc!important}.trend-header small{color:#748ca2!important}
-select,.search-input,.date-btn{
-  background:#0c1c2b!important;color:#eaf3fc!important;border:1px solid #24425c!important
-}
-select option{background:#0c1c2b;color:#fff}
-.dot{background:#30465b!important}.dot.active{background:#1683ff!important}
-.bottom-nav{
-  height:74px!important;background:rgba(6,17,29,.96)!important;
-  border-top:1px solid #1b344b!important;box-shadow:0 -10px 28px rgba(0,0,0,.28)!important;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
-}
-.nav-item{color:#71879b!important;min-width:58px!important}
-.nav-item div{font-size:18px!important}.nav-item.active{color:#168cff!important}
-.nav-item.active div{background:#0d3152;border-radius:10px;padding:2px 10px}
-.modal{background:rgba(0,0,0,.72)!important}
-.modal-box{
-  background:#0b1928!important;color:#edf5ff!important;border:1px solid #1b3850!important
-}
-.modal-head{background:#0b1928!important;border-bottom-color:#1b3043!important}
-.modal-head h2{color:#fff!important}.close{background:#10263a!important;color:#58aaff!important}
-.detail-section{background:#102235!important}.detail-row{border-bottom-color:#1d3449!important}
-.detail-row span:first-child{color:#8198ad!important}.transaction{background:#0d1d2d!important;border-color:#1b3850!important}
-.transaction-value{background:#102235!important}.transaction-value span,.small-note{color:#7890a6!important}
-.error-box{background:#341b20!important;color:#ff9da5!important}
-.badge{background:#12345a!important;color:#75baff!important}
-.report-box{background:#102235!important;color:#dbe9f6!important}
-.install{background:#1683ff!important;color:#fff!important}
-.feed-closing-strip{background:linear-gradient(135deg,#0e2438,#0d1b29)!important;border-color:#1d3a52!important}
-.feed-closing-strip small{color:#8198ad!important}.feed-closing-strip strong{color:#fff!important}
-.feed-bag-equivalent{border-left-color:#1e374e!important}.feed-closing-strip>span{color:#4aa8ff!important}
-.control-item,.action-row{background:#102235!important;border-color:#1b3850!important;color:#edf5ff!important}
-.health-strip{background:#0c3326!important;color:#50db92!important}
-.control-actions button,.clear-alerts,.more-toggle,.note-actions button{background:#102235!important;color:#d9e7f4!important;border-color:#1b3850!important}
-.control-actions button.primary,.note-actions button.primary{background:#1683ff!important;color:#fff!important}
-.note-input{background:#0b1c2b!important;color:#edf5ff!important;border-color:#24425c!important}
-@media(min-width:700px){
-  body{background:linear-gradient(120deg,#06111d,#091827)!important}
-  .container{max-width:1120px!important}
-  .card{border-radius:18px!important}
-}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif}
+body{padding-bottom:82px;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}
+.app-shell{width:100%;max-width:460px;margin:auto;padding:0 12px 22px}
+.topbar{height:70px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:80;background:linear-gradient(180deg,#06121f 78%,rgba(6,18,31,0))}
+.brand{display:flex;gap:10px;align-items:center}.brand-icon{width:39px;height:39px;border:1px solid #1a4058;background:#0b263c;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.eyebrow{font-size:8px;color:#5f8aa6;font-weight:800;letter-spacing:1.4px}.brand h1{font-size:18px;line-height:1.1;margin:2px 0 0;letter-spacing:-.3px}.subline{font-size:8px;color:#708b9f;margin-top:4px}
+.top-actions{display:flex;gap:5px}.icon-btn{position:relative;width:34px;height:34px;border:1px solid #17405a;background:#0b263c;color:#d9e8f2;border-radius:9px;font-size:17px}.bell{font-size:18px}
+.notify-badge,.nav-badge{position:absolute;background:var(--red);color:white;font-size:8px;font-weight:800;min-width:15px;height:15px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}.notify-badge{top:-5px;right:-4px}.hidden{display:none!important}
+.livebar{height:26px;display:flex;align-items:center;gap:6px;font-size:8px;color:#71899d;margin-bottom:5px}.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(32,209,124,.5)}.status-dot.off{background:var(--red);box-shadow:none}.refresh-btn,.install-btn{margin-left:auto;border:1px solid #17405a;background:#0b263c;color:#a9c0cf;border-radius:8px;padding:6px 8px;font-size:8px}.install-btn{display:none;color:#fff;background:#087fdd}
+.view{display:none}.view.active{display:block}.section-head{display:flex;align-items:flex-start;justify-content:space-between;padding:5px 1px 9px}.section-head h2{font-size:15px;margin:0;letter-spacing:-.2px}.section-head p{font-size:8px;color:var(--muted);margin:4px 0 0}.date-chip{border:1px solid #17405a;background:#0b263c;color:#8dc9ff;border-radius:8px;padding:7px 8px;font-size:8px}
+.hero-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.hero-kpi{border:1px solid var(--line);background:linear-gradient(145deg,#0b2438,#091e30);border-radius:12px;text-align:left;padding:10px;min-height:78px;position:relative;overflow:hidden;color:#fff}.hero-kpi:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}.hero-kpi.blue:before{background:var(--blue)}.hero-kpi.cyan:before{background:var(--cyan)}.hero-kpi.green:before{background:var(--green)}.hero-kpi.amber:before{background:var(--amber)}.hero-kpi.purple:before{background:var(--purple)}.hero-kpi.red:before{background:var(--red)}.hero-kpi.teal:before{background:#1ed4b0}.hero-kpi.orange:before{background:var(--orange)}
+.hero-kpi span{display:block;color:#7893a7;font-size:8px;font-weight:650}.hero-kpi strong{display:inline-block;margin-top:7px;font-size:20px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.5px}.hero-kpi small{font-size:8px;color:#6e899d;margin-left:4px}.hero-kpi:after{content:"";position:absolute;right:9px;bottom:8px;width:20px;height:2px;background:#1a4967;border-radius:4px}
+.panel{background:linear-gradient(145deg,#0b2235,#091d2e);border:1px solid var(--line);border-radius:13px;margin-top:8px;padding:10px;box-shadow:0 8px 25px rgba(0,0,0,.12)}.panel-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.panel-title h3{font-size:11px;margin:0;color:#f0f6fa}.panel-title span{font-size:8px;color:#71899c;display:block;margin-top:3px}.text-btn{border:0;background:none;color:#2ba5ff;font-size:8px;padding:4px}.live-pill{padding:4px 7px;border-radius:8px;background:#083522;color:#39dd92;font-size:7px;font-weight:800}
+.mtd-panel{padding:10px}.mtd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.mtd-grid>div{background:#0d2a41;border:1px solid #17425c;border-radius:9px;padding:8px 6px}.mtd-grid span{display:block;font-size:7px;color:#7893a6}.mtd-grid b{display:block;font-size:13px;margin-top:4px}.mtd-grid small{font-size:7px;color:#668298}
+.attention-panel{background:linear-gradient(145deg,#0b2235,#0d2131)}.attention-row{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid #15384e}.attention-row:last-child{border-bottom:0}.attention-icon{font-size:13px}.attention-main{min-width:0;flex:1}.attention-main b{font-size:9px;display:block}.attention-main small{font-size:8px;color:#718a9d;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.attention-tag{font-size:7px;font-weight:800;padding:4px 6px;border-radius:7px;background:#3a1820;color:#ff8290}.attention-tag.warn{background:#382b0d;color:#ffc94e}.attention-tag.ok{background:#0b3325;color:#46df99}
+.quality-summary{display:grid;grid-template-columns:68px 1fr;gap:9px;align-items:center}.quality-score strong{font-size:24px;display:block;color:#42dc98}.quality-score span{font-size:7px;color:#6f899d}.quality-bars{display:flex;gap:3px;align-items:flex-end;height:32px}.quality-bars i{flex:1;background:#1d3f53;border-radius:3px 3px 1px 1px;min-height:5px}.quality-stats{grid-column:1/-1;display:flex;justify-content:space-between;color:#7891a4;font-size:7px;border-top:1px solid #15384e;padding-top:7px}.quality-stats b{color:#d9e6ee}
+.hero-single{background:linear-gradient(135deg,#0b2942,#0a1e31);border:1px solid #16425e;border-radius:13px;padding:14px;margin-bottom:7px}.hero-single span{font-size:8px;color:#7893a7}.hero-single strong{display:block;font-size:28px;margin-top:5px;letter-spacing:-.8px}.hero-single small{font-size:7px;color:#58768a}
+.sub-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.sub-kpis>div,.inventory-summary>div,.bag-summary>div,.flow-kpis>div{background:#0d2940;border:1px solid #17425c;border-radius:9px;padding:8px 6px}.sub-kpis span,.inventory-summary span,.bag-summary span,.flow-kpis span{display:block;font-size:7px;color:#7892a5}.sub-kpis b,.inventory-summary b,.bag-summary b,.flow-kpis b{display:block;font-size:12px;margin-top:4px}.sub-kpis small,.inventory-summary small,.bag-summary small,.flow-kpis small{font-size:7px;color:#688398}
+.data-list{display:flex;flex-direction:column}.data-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 3px;border-bottom:1px solid #14364c;cursor:pointer}.data-row:last-child{border-bottom:0}.data-main{min-width:0;flex:1}.data-main b{display:block;font-size:9px;line-height:1.25}.data-main small{display:block;font-size:7px;color:#708a9d;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.data-value{text-align:right}.data-value b{display:block;font-size:11px}.data-value small{display:block;color:#708a9d;font-size:7px;margin-top:3px}
+.loss-row{display:grid;grid-template-columns:minmax(0,1.5fr) .7fr .7fr .6fr;align-items:center;gap:5px;padding:8px 2px;border-bottom:1px solid #14364c}.loss-row b{font-size:8px}.loss-row span{font-size:8px;text-align:right;color:#a5b8c5}.loss-row .loss-high{color:#ff6674;font-weight:800}.loss-row .loss-normal{color:#36d58c;font-weight:800}
+.inventory-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.inventory-summary b{font-size:15px}.searchbar{height:35px;display:flex;align-items:center;gap:7px;background:#0b2940;border:1px solid #17425c;border-radius:9px;margin-top:8px;padding:0 9px;color:#678398}.searchbar input{flex:1;border:0;outline:0;background:transparent;color:#e4eff6;font-size:10px}.searchbar input::placeholder{color:#587488}
+.table-wrap{overflow:auto}.rm-table,.bag-table{width:100%;border-collapse:collapse;min-width:650px}.rm-table th,.bag-table th{text-align:right;color:#6f899d;font-size:7px;font-weight:700;padding:6px 4px;border-bottom:1px solid #17405a;white-space:nowrap}.rm-table th:first-child,.bag-table th:first-child{text-align:left}.rm-table td,.bag-table td{text-align:right;padding:8px 4px;border-bottom:1px solid #123247;font-size:8px;white-space:nowrap}.rm-table td:first-child,.bag-table td:first-child{text-align:left;white-space:normal;min-width:125px}.rm-table tr:last-child td,.bag-table tr:last-child td{border-bottom:0}.material-name{font-size:8.5px;font-weight:650}.material-unit{display:block;color:#657f92;font-size:6.5px;margin-top:2px}.status{font-size:7px!important;font-weight:800;padding:4px 5px;border-radius:6px}.status.critical{background:#3a1820;color:#ff6876}.status.near{background:#3a2b0d;color:#ffc849}.status.healthy{background:#0b3325;color:#41dd94}.status.unknown{background:#26313a;color:#9fb1bd}
+.status-legend{display:flex;flex-wrap:wrap;gap:8px;color:#829aaa;font-size:7px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px}.dot.red{background:var(--red)}.dot.yellow{background:var(--amber)}.dot.green{background:var(--green)}.reorder-cards{margin-top:8px;display:grid;gap:5px}.reorder-card{display:flex;align-items:center;justify-content:space-between;padding:8px;border:1px solid #173b51;border-radius:9px;background:#0d2940}.reorder-card b{font-size:8px}.reorder-card small{display:block;font-size:7px;color:#718a9d;margin-top:2px}.reorder-card strong{font-size:10px}
+.tabs,.seg,.trend-filter{display:flex;gap:4px;overflow:auto}.tabs button,.seg button,.trend-filter button{border:1px solid #173c54;background:#0b2940;color:#7892a5;border-radius:7px;padding:6px 8px;font-size:7px;white-space:nowrap}.tabs button.active,.seg button.active,.trend-filter button.active{background:#078fe9;border-color:#078fe9;color:#fff}
+.flow-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.flow-kpis .closing{border-color:#1e7054;background:#0d3027}.flow-kpis b{font-size:11px}
+.bag-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.bag-summary b{font-size:14px}.bag-summary .damage{border-color:#64313a;background:#2a1820}.bag-summary .damage b{color:#ff6977}
+.alert-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.alert-summary>div{background:#0d2940;border:1px solid #17425c;border-radius:10px;padding:10px}.alert-summary b{display:block;font-size:19px}.alert-summary span{display:block;color:#718a9d;font-size:7px;margin-top:3px}.alert-card{display:flex;gap:8px;padding:10px 2px;border-bottom:1px solid #15384e}.alert-card:last-child{border-bottom:0}.alert-card .aicon{font-size:14px}.alert-card b{font-size:9px}.alert-card small{display:block;color:#718a9d;font-size:7px;margin-top:3px}.alert-card.critical b{color:#ff6674}.alert-card.warning b{color:#ffc849}.alert-card.info b{color:#5fb7ff}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.menu-grid button{min-height:83px;border:1px solid #17405a;background:linear-gradient(145deg,#0b263c,#0d2940);border-radius:11px;color:#fff;text-align:left;padding:11px}.menu-grid button:first-letter{font-size:17px}.menu-grid b{display:block;font-size:9px;margin-top:7px}.menu-grid small{display:block;color:#6f899d;font-size:7px;margin-top:3px}.install-card{text-align:center;padding:25px 12px}.install-logo{font-size:38px}.install-card h3{font-size:13px}.install-card p{font-size:8px;color:#718a9d}.install-card button{border:0;background:#078fe9;color:#fff;border-radius:8px;padding:8px 15px;font-size:8px;font-weight:800}
+.trend-filter{margin-bottom:7px}.trend-grid{display:grid;gap:7px}.chart-card h3{font-size:9px;margin:0 0 7px}.chart{width:100%;height:150px;display:block}
+.bottom-nav{position:fixed;z-index:100;left:0;right:0;bottom:0;height:70px;padding-bottom:env(safe-area-inset-bottom);background:rgba(5,18,30,.97);border-top:1px solid #173a51;backdrop-filter:blur(14px);display:flex;justify-content:space-around}.nav-item{position:relative;flex:1;border:0;background:none;color:#688398;font-size:7px;padding:8px 2px}.nav-item span{display:block;font-size:18px;line-height:21px}.nav-item b{font-size:7px;font-weight:650}.nav-item.active{color:#1599ff}.nav-badge{top:3px;right:23%}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-end;z-index:500}.modal.show{display:flex}.modal-box{width:100%;max-width:500px;max-height:88vh;overflow:auto;background:#092034;border:1px solid #1b4058;border-bottom:0;border-radius:20px 20px 0 0;padding:13px;color:#e9f2f7;box-shadow:0 -15px 50px rgba(0,0,0,.35)}.modal-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #17394f;padding-bottom:9px;margin-bottom:9px}.modal-head h2{font-size:14px;margin:0}.close{width:34px;height:34px;border:0;border-radius:50%;background:#0d2a40;color:#fff;font-size:21px}.detail-section{background:#0b2940;border:1px solid #17425c;border-radius:10px;padding:10px;margin-bottom:7px}.detail-section h3{font-size:9px;margin:0 0 7px}.detail-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid #173b50;font-size:8px}.detail-row:last-child{border-bottom:0}.detail-row span:first-child{color:#718b9e}.transaction{border:1px solid #173d55;background:#0b2940;border-radius:9px;padding:8px;margin-bottom:5px}.transaction-title{display:flex;justify-content:space-between;font-size:8px;margin-bottom:5px}.transaction-values{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.transaction-value{background:#092337;border-radius:7px;padding:6px}.transaction-value span{display:block;font-size:6px;color:#6e899c}.transaction-value strong{display:block;font-size:8px;margin-top:2px}.empty{font-size:8px;color:#718a9d;padding:9px 2px}.reconcile-ok{border-color:#236548!important}.reconcile-bad{border-color:#6d3038!important}.report-box{white-space:pre-line;background:#0b2940;border:1px solid #173d55;border-radius:9px;padding:9px;font-size:8px;line-height:1.55}
+@media(min-width:700px){.app-shell{max-width:1100px}.hero-kpis{grid-template-columns:repeat(4,1fr)}.topbar{position:relative}.view.active{max-width:1050px;margin:auto}.bottom-nav{max-width:1100px;margin:auto;left:50%;transform:translateX(-50%);border-radius:15px 15px 0 0}.modal{align-items:center;padding:20px}.modal-box{border-radius:20px;border:1px solid #1b4058}}
+@media(max-width:380px){.mtd-grid{grid-template-columns:repeat(2,1fr)}.sub-kpis{grid-template-columns:repeat(2,1fr)}.flow-kpis{grid-template-columns:repeat(3,1fr)}.bag-summary{grid-template-columns:repeat(2,1fr)}}
 </style>
 
 </head>
+
 <body>
-<div class="container">
-  <div class="header">
-    <div><div class="smart-greeting" id="smartGreeting">GOOD MORNING, SIR</div><div class="smart-title"><h1>Feed Plant Control Center</h1></div><p>Manager Dashboard • <span id="reportDate">Latest</span></p><span class="selected-date-chip" id="selectedDateChip">Latest</span></div>
-    <div class="header-actions">
-      <button class="header-tool" onclick="openGlobalSearch()" aria-label="Search">🔎</button>
-      <button class="header-tool" onclick="openDateSelector()" aria-label="Date selector">📅</button>
-      <button class="notify-btn" onclick="openNotifications()" aria-label="Notifications">🔔<span id="notifyBadge" class="notify-badge hidden">0</span></button>
-      <div class="plant">🏭</div>
-    </div>
-  </div>
-
-  <div class="status-line">
-    <span id="statusDot" class="status-dot"></span>
-    <span id="connectionStatus">Loading...</span>
-    <span id="lastUpdated"></span>
-    <button class="refresh" onclick="manualRefresh()">↻ Refresh</button>
-    <button id="installBtn" class="install" onclick="installPWA()">Install</button>
-  </div>
-
-  <div class="date-strip" aria-label="Date navigation">
-    <button onclick="shiftViewDate(-1)" aria-label="Previous date">‹</button>
-    <div class="date-strip-main" onclick="openDateSelector()"><div><strong id="dateStripTitle">Latest available day</strong><small id="dateStripSub">Tap to change date</small></div><span class="date-state" id="dateStripState">LATEST</span></div>
-    <button onclick="shiftViewDate(1)" aria-label="Next date">›</button>
-  </div>
-
-  <!-- MANAGEMENT QUICK VIEW -->
-  <div class="card">
-    <div class="card-title"><h2>⚡ Management Quick View</h2><span>Tap for details</span></div>
-    <div class="quick-grid">
-      <div class="quick quick-kpi" onclick="openFeedTotals('production_day')"><p>Day Production</p><strong id="qProdDay">-- MT</strong><div class="spark" id="sparkProd"></div></div>
-      <div class="quick" onclick="openFeedTotals('production_month')"><p>Month Production</p><strong id="qProdMonth">-- MT</strong></div>
-      <div class="quick quick-kpi" onclick="openFeedTotals('dispatch_day')"><p>Day Dispatch</p><strong id="qDispDay">-- MT</strong><div class="spark" id="sparkDisp"></div></div>
-      <div class="quick" onclick="openFeedTotals('dispatch_month')"><p>Month Dispatch</p><strong id="qDispMonth">-- MT</strong></div>
-    </div>
-    <div style="height:8px"></div>
-    <div class="mini-grid">
-      <div class="mini" onclick="openRawCategory('PURCHASE')"><p>RM Received</p><strong id="qReceived">--</strong></div>
-      <div class="mini" onclick="openRawCategory('CONSUMPTION')"><p>RM Consumption</p><strong id="qConsumption">--</strong></div>
-      <div class="mini" onclick="openStockDetails()"><p>RM Closing</p><strong id="qClosing">--</strong></div>
-      <div class="mini" onclick="openFeedClosingDetails()"><p>Feed Closing Stock</p><strong id="qFeedClosing">-- MT</strong><small id="qFeedClosingBagsMini" style="display:block;margin-top:4px;color:#64748b;font-weight:600">-- Bags</small></div>
-    </div>
-    <div class="management-status-row">
-      <button class="status-tile" onclick="openStockForecast()"><small>📦 Reorder / Cover</small><strong id="mergedReorder">--</strong><span>View stock cover →</span></button>
-      <button class="status-tile" onclick="openDataHealth()"><small>⚠ Data Issues</small><strong id="mergedIssues">--</strong><span>Check issues →</span></button>
-    </div>
-  </div>
-
-  <!-- BOMMAKAL PREMIX TRANSFERS -->
-  <div class="card premix-card" id="premixTransferCard">
-    <div class="card-title"><h2>🧪 Premixes</h2><span>Transferred from Bommakal • KG</span></div>
-    <div id="premixTransferList"><div class="empty">Loading...</div></div>
-  </div>
-
-  <div class="desktop-grid">
-    <!-- RAW MATERIAL REORDER -->
-    <div class="card">
-      <div class="card-title"><h2>📦 Raw Material Reorder</h2><span>Tap material</span></div>
-      <div class="stock-table">
-        <div class="stock-head"><span>Material / Avg Day</span><span>Stock</span><span>Cover</span><span>Status</span></div>
-        <div id="stockList"><div class="empty">Loading...</div></div>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🏭</div>
+      <div>
+        <div class="eyebrow">FEED PLANT</div>
+        <h1>Control Center</h1>
+        <div class="subline"><span id="reportDate">Latest</span> · <span id="connectionStatus">Loading...</span></div>
       </div>
-      
     </div>
+    <div class="top-actions">
+      <button class="icon-btn" onclick="openGlobalSearch()" aria-label="Search">⌕</button>
+      <button class="icon-btn" onclick="openDateSelector()" aria-label="Date">▣</button>
+      <button class="icon-btn bell" onclick="openNotifications()" aria-label="Alerts">♢<span id="notifyBadge" class="notify-badge hidden">0</span></button>
+    </div>
+  </header>
+
+  <div class="livebar">
+    <span id="statusDot" class="status-dot"></span>
+    <span id="lastUpdated">Connecting…</span>
+    <button class="refresh-btn" onclick="manualRefresh()">↻ Refresh</button>
+    <button id="installBtn" class="install-btn" onclick="installPWA()">Install</button>
+  </div>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="view-overview" class="view active">
+      <div class="section-head">
+        <div><h2>Overview</h2><p>Today & month-to-date operational picture</p></div>
+        <button class="date-chip" onclick="openDateSelector()">📅 <span id="selectedDateChip">Latest</span></button>
+      </div>
+
+      <div class="hero-kpis">
+        <button class="hero-kpi blue" onclick="openFeedTotals('production_day')">
+          <span>Today Production</span><strong id="ovProdDay">--</strong><small>MT</small>
+        </button>
+        <button class="hero-kpi cyan" onclick="openFeedTotals('dispatch_day')">
+          <span>Today Dispatch</span><strong id="ovDispDay">--</strong><small>MT</small>
+        </button>
+        <button class="hero-kpi green" onclick="openStockDetails()">
+          <span>Feed Closing Stock</span><strong id="ovFeedClosing">--</strong><small>MT</small>
+        </button>
+        <button class="hero-kpi amber" onclick="openRawCategory('CONSUMPTION')">
+          <span>RM Consumption</span><strong id="ovRMConsumption">--</strong><small>MT</small>
+        </button>
+        <button class="hero-kpi purple" onclick="openRawCategory('PURCHASE')">
+          <span>RM Received / Purchase</span><strong id="ovRMReceived">--</strong><small>MT</small>
+        </button>
+        <button class="hero-kpi red" onclick="openProcessLoss()">
+          <span>Process Loss</span><strong id="ovProcessLoss">--</strong><small>%</small>
+        </button>
+        <button class="hero-kpi teal" onclick="openPPBagDetails()">
+          <span>PP Bags Closing</span><strong id="ovBagClosing">--</strong><small>Nos</small>
+        </button>
+        <button class="hero-kpi orange" onclick="openStockForecast()">
+          <span>Reorder Items</span><strong id="ovReorder">--</strong><small>items</small>
+        </button>
+      </div>
+
+      <div class="panel mtd-panel">
+        <div class="panel-title"><div><h3>MTD</h3><span>Month-to-date summary</span></div><span class="live-pill">LIVE</span></div>
+        <div class="mtd-grid">
+          <div><span>Production</span><b id="mtdProd">--</b><small>MT</small></div>
+          <div><span>Dispatch</span><b id="mtdDisp">--</b><small>MT</small></div>
+          <div><span>RM Purchase</span><b id="mtdPurchase">--</b><small>MT</small></div>
+          <div><span>RM Consumption</span><b id="mtdConsumption">--</b><small>MT</small></div>
+        </div>
+      </div>
+
+      <div class="panel attention-panel">
+        <div class="panel-title"><div><h3>🚨 What Needs Attention?</h3><span>Actionable items first</span></div><button class="text-btn" onclick="openManagerActions()">View all →</button></div>
+        <div id="attentionList"><div class="empty">Analysing current data…</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><div><h3>🛡 Data Accuracy</h3><span>Automation health</span></div><button class="text-btn" onclick="openDataHealth()">Open →</button></div>
+        <div class="quality-summary">
+          <div class="quality-score"><strong id="dqScore">--%</strong><span>Data Quality</span></div>
+          <div class="quality-bars" id="dqMiniBars"></div>
+          <div class="quality-stats"><span>🔴 <b id="dqCritical">0</b> Critical</span><span>🟡 <b id="dqUnusual">0</b> Unusual</span><span>🟠 <b id="dqMismatch">0</b> Mismatch</span></div>
+        </div>
+      </div>
+    </section>
 
     <!-- PRODUCTION -->
-    <div class="card">
-      <div class="card-title"><h2>🏭 Production</h2><span>Actual output in Bags</span></div>
-      <div class="production-total" id="productionTotalMain">-- Bags</div>
-      <div class="production-label">Actual Production</div>
-      <div id="productionList"><div class="empty">Loading...</div></div>
-    </div>
+    <section id="view-production" class="view">
+      <div class="section-head"><div><h2>🏭 Production</h2><p>Actual output, efficiency & process loss</p></div></div>
+      <div class="hero-single">
+        <span>Actual Output</span><strong id="prodTotal">--</strong><small>Source: PRODUCTION_DATA</small>
+      </div>
+      <div class="sub-kpis">
+        <div><span>Standard Output</span><b id="prodStandard">--</b></div>
+        <div><span>Output %</span><b id="prodEfficiency">--%</b></div>
+        <div><span>Process Loss</span><b id="prodLoss">--%</b></div>
+        <div><span>Loss Qty</span><b id="prodLossQty">--</b></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><div><h3>Product-wise Production</h3><span>Tap a product for complete details</span></div></div>
+        <div id="productionTable" class="data-list"></div>
+      </div>
+      <div class="panel loss-panel">
+        <div class="panel-title"><div><h3>📉 Process Loss Analysis</h3><span>High-loss products highlighted</span></div></div>
+        <div id="lossTable" class="data-list"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><div><h3>Trend</h3><span id="prodTrendLabel">7 Days</span></div><div class="seg"><button class="active" onclick="setTrendDays(7,this)">7D</button><button onclick="setTrendDays(30,this)">30D</button></div></div>
+        <canvas id="productionTrendCanvas" class="chart"></canvas>
+      </div>
+    </section>
 
-  </div>
+    <!-- INVENTORY -->
+    <section id="view-inventory" class="view">
+      <div class="section-head"><div><h2>📦 Raw Material Control</h2><p>Closing, consumption, cover & reorder</p></div></div>
+      <div class="inventory-summary">
+        <div><span>Total Closing</span><b id="rmClosingTotal">--</b><small>MT</small></div>
+        <div><span>Below Reorder</span><b id="rmReorderCount">--</b><small>items</small></div>
+        <div><span>Low Cover</span><b id="rmLowCover">--</b><small>items</small></div>
+      </div>
+      <div class="searchbar"><span>⌕</span><input id="rmSearch" placeholder="Search material..." oninput="filterRM()"></div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="rm-table">
+            <thead><tr><th>Material</th><th>Closing</th><th>Cons./Day</th><th>Received</th><th>Reorder</th><th>Cover</th><th>Status</th></tr></thead>
+            <tbody id="rmTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><div><h3>🧠 Smart Reorder System</h3><span>Based on MATERIAL_MASTER + consumption history</span></div></div>
+        <div class="status-legend"><span><i class="dot red"></i> Critical — Below Reorder</span><span><i class="dot yellow"></i> Near Reorder</span><span><i class="dot green"></i> Healthy Stock</span></div>
+        <div id="reorderCards" class="reorder-cards"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><div><h3>RM Movements</h3><span>Material-wise</span></div></div>
+        <div class="tabs"><button class="active" onclick="renderMovementTab('CONSUMPTION',this)">Consumption</button><button onclick="renderMovementTab('PURCHASE',this)">Received</button><button onclick="renderMovementTab('TRANSFER',this)">Transfer</button><button onclick="renderMovementTab('STOCK',this)">Closing</button></div>
+        <div id="movementList" class="data-list"></div>
+      </div>
+    </section>
 
-  <!-- FEED UNIT -->
-  <div class="card">
-    <div class="card-title"><h2>🌾 Feed Unit</h2><span>Product-wise details</span></div>
-    <div id="feedUnitList"><div class="empty">Loading...</div></div>
-  </div>
-
-  <!-- RAW MATERIAL MOVEMENTS -->
-  <div class="card">
-    <div class="card-title"><h2>📋 Raw Material Movements</h2><span>Material-wise</span></div>
-    <div class="section-tabs">
-      <button class="active" onclick="setRawTab(this,'STOCK')">Stock</button>
-      <button onclick="setRawTab(this,'CONSUMPTION')">Consumption</button>
-      <button onclick="setRawTab(this,'PURCHASE')">Received</button>
-      <button onclick="setRawTab(this,'TRANSFER')">Transfer</button>
-      <button onclick="setRawTab(this,'GAIN')">Gain</button>
-      <button onclick="setRawTab(this,'SHORTAGE')">Shortage</button>
-      <button onclick="setRawTab(this,'SALE')">Sale</button>
-    </div>
-    <div id="rawCategoryList"></div>
-  </div>
+    <!-- FEED UNIT -->
+    <section id="view-feed" class="view">
+      <div class="section-head"><div><h2>🌾 Feed Unit</h2><p>Opening → Production → Dispatch → Closing</p></div></div>
+      <div class="flow-kpis">
+        <div><span>Opening</span><b id="feedOpening">--</b><small>MT</small></div>
+        <div><span>Production</span><b id="feedProduction">--</b><small>MT</small></div>
+        <div><span>Dispatch</span><b id="feedDispatch">--</b><small>MT</small></div>
+        <div><span>Transfer</span><b id="feedTransfer">--</b><small>MT</small></div>
+        <div class="closing"><span>Closing</span><b id="feedClosing">--</b><small>MT</small></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><div><h3>Product-wise Feed Unit</h3><span>Day / Month / Closing</span></div></div>
+        <div id="feedTable" class="data-list"></div>
+      </div>
+    </section>
 
     <!-- PP BAGS -->
-    <div class="card">
-      <div class="card-title"><h2>🛍 PP Bags</h2><span>Tap product</span></div>
-      <div class="pp-grid" id="bagGrid"><div class="empty">Loading...</div></div>
-    </div>
+    <section id="view-bags" class="view">
+      <div class="section-head"><div><h2>🛍 PP Bags</h2><p>Opening → Received → Issue → Damage → Closing</p></div></div>
+      <div class="bag-summary">
+        <div><span>Closing</span><b id="bagClosingTotal">--</b><small>Nos</small></div>
+        <div><span>Received</span><b id="bagReceivedTotal">--</b><small>Nos</small></div>
+        <div><span>Issue</span><b id="bagIssueTotal">--</b><small>Nos</small></div>
+        <div class="damage"><span>Damage Today</span><b id="bagDamageTotal">--</b><small>Nos</small></div>
+      </div>
+      <div class="panel"><div class="table-wrap"><table class="bag-table"><thead><tr><th>Product</th><th>Open</th><th>Recv.</th><th>Issue</th><th>Damage</th><th>Close</th><th>Status</th></tr></thead><tbody id="bagTableBody"></tbody></table></div></div>
+    </section>
 
-  <!-- TRENDS -->
-  <div class="card" id="trendsSection">
-    <div class="card-title"><h2>📊 Trends</h2><span>Swipe →</span></div>
-    <div class="trend-wrapper" id="trendWrapper">
-      <div class="trend-card"><div class="trend-header"><div><h3>📦 Raw Material Consumption</h3><small>Daily movement</small></div><select id="materialSelect" onchange="drawMaterialChart(this.value)"></select></div><canvas id="materialChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>📥 Purchase / Received Trend</h3><small>Daily movement</small></div></div><canvas id="purchaseChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>📦 Closing Stock Trend</h3><small>Daily movement</small></div></div><canvas id="closingChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>🏭 Production Trend</h3><small>Bags • available days</small></div></div><canvas id="productionChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>📈 Output % Trend</h3><small>Production records</small></div></div><canvas id="outputChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>⚙ Process Loss Trend</h3><small>Production records</small></div></div><canvas id="lossChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>🌾 Feed Unit Production / Dispatch</h3><small>MT • available days</small></div></div><canvas id="feedChart"></canvas></div>
-      <div class="trend-card"><div class="trend-header"><div><h3>🛍 PP Bags Issue / Damage</h3><small>Available records</small></div></div><canvas id="bagChart"></canvas></div>
-    </div>
-    <div class="dots" id="trendDots"></div>
-  </div>
+    <!-- ALERTS -->
+    <section id="view-alerts" class="view">
+      <div class="section-head"><div><h2>🚨 Alerts</h2><p>Reorder, unusual activity & mismatches</p></div></div>
+      <div class="alert-summary"><div><b id="alertCritical">0</b><span>Critical</span></div><div><b id="alertWarning">0</b><span>Warnings</span></div><div><b id="alertInfo">0</b><span>Info</span></div></div>
+      <div class="panel"><div id="alertsList"></div></div>
+    </section>
 
-  <div class="bottom-nav">
-    <div class="nav-item active" onclick="goHome()"><div>⌂</div>Home</div>
-    <div class="nav-item" onclick="openStockDetails()"><div>📦</div>Stock</div>
-    <div class="nav-item" onclick="openProductionDetails()"><div>🏭</div>Production</div>
-    <div class="nav-item" onclick="openPPBagDetails()"><div>🛍</div>PP Bags</div>
-    <div class="nav-item" onclick="goTrend()"><div>📊</div>Reports</div>
-  </div>
+    <!-- MORE -->
+    <section id="view-more" class="view">
+      <div class="section-head"><div><h2>☰ More</h2><p>Data Quality, Trends & Reports</p></div></div>
+      <div class="menu-grid">
+        <button onclick="openDataHealth()">🛡<b>Data Quality</b><small>Accuracy & checks</small></button>
+        <button onclick="showView('trends')">📊<b>Trends & Reports</b><small>7D / 30D analysis</small></button>
+        <button onclick="openGlobalSearch()">⌕<b>Global Search</b><small>Material / product</small></button>
+        <button onclick="openDateSelector()">▣<b>Date Selector</b><small>View another day</small></button>
+        <button onclick="openDayComparison()">⇄<b>Day Comparison</b><small>Completed days</small></button>
+        <button onclick="openManagerNotes()">📝<b>Manager Note</b><small>Private device note</small></button>
+      </div>
+      <div class="panel install-card"><div class="install-logo">🏭</div><h3>Feed Plant Control Center</h3><p>Install as a mobile app for quick plant monitoring.</p><button onclick="installPWA()">Install App</button></div>
+    </section>
+
+    <!-- TRENDS -->
+    <section id="view-trends" class="view">
+      <div class="section-head"><div><h2>📊 Trends & Reports</h2><p>Available data only · no invented history</p></div></div>
+      <div class="trend-filter"><button class="active" onclick="setTrendDays(7,this)">7 Days</button><button onclick="setTrendDays(30,this)">30 Days</button></div>
+      <div class="trend-grid">
+        <div class="panel chart-card"><h3>Production Trend</h3><canvas id="trProd"></canvas></div>
+        <div class="panel chart-card"><h3>Dispatch Trend</h3><canvas id="trDisp"></canvas></div>
+        <div class="panel chart-card"><h3>RM Consumption Trend</h3><canvas id="trCons"></canvas></div>
+        <div class="panel chart-card"><h3>RM Receipt Trend</h3><canvas id="trRecv"></canvas></div>
+        <div class="panel chart-card"><h3>Process Loss Trend</h3><canvas id="trLoss"></canvas></div>
+        <div class="panel chart-card"><h3>Feed Closing Stock Trend</h3><canvas id="trClose"></canvas></div>
+        <div class="panel chart-card"><h3>PP Bag Issue Trend</h3><canvas id="trBags"></canvas></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-view="overview" onclick="showView('overview')"><span>⌂</span><b>Overview</b></button>
+    <button class="nav-item" data-view="production" onclick="showView('production')"><span>▥</span><b>Production</b></button>
+    <button class="nav-item" data-view="inventory" onclick="showView('inventory')"><span>▣</span><b>Inventory</b></button>
+    <button class="nav-item" data-view="alerts" onclick="showView('alerts')"><span>⚠</span><b>Alerts</b><em id="navAlertBadge" class="nav-badge hidden">0</em></button>
+    <button class="nav-item" data-view="more" onclick="showView('more')"><span>•••</span><b>More</b></button>
+  </nav>
 </div>
 
 <div class="modal" id="modal" onclick="outsideClose(event)">
@@ -773,7 +780,10 @@ function applyData(apiData,fromCache=false){
     consumption:apiData.consumption??null,
     efficiency:apiData.efficiency??null,
     processLoss:apiData.processLoss??null,
-    report_date:apiData.report_date??null
+    report_date:apiData.report_date??null,
+    materialMaster:Array.isArray(apiData.material_master)?apiData.material_master:
+      (Array.isArray(apiData.materialMaster)?apiData.materialMaster:
+      (Array.isArray(apiData.MATERIAL_MASTER)?apiData.MATERIAL_MASTER:[]))
   };
   if(DATA.report_date)setText("reportDate",VIEW_DATE||DATA.report_date);
   renderDashboard();
@@ -2018,5 +2028,292 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPro
 async function installPWA(){if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById("installBtn").style.display="none"}
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(console.warn))}
 </script>
+
+
+<script id="feed-control-center-v4-js">
+(function(){
+  const $=id=>document.getElementById(id);
+  const val=(v)=>{const n=Number(v);return Number.isFinite(n)?n:0};
+  const text=(id,v)=>{if($(id))$(id).textContent=v};
+  const fmtN=v=>Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:2});
+  const fmt0=v=>Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:0});
+  const fmtDate=v=>String(v||"").match(/\d{4}-\d{2}-\d{2}/)?.[0]||String(v||"");
+  const txType=t=>String(t?.transaction||t?.type||t?.movement||"").trim().toUpperCase();
+  const txDate=t=>fmtDate(t?.report_date||t?.Report_Date||t?.date);
+  const selectedDate=()=>VIEW_DATE?fmtDate(VIEW_DATE):fmtDate(DATA.report_date)||availableDates()[0]||"";
+  const availableDates=()=>[...new Set([
+    ...(DATA.stockHistory||[]).map(txDate),
+    ...(DATA.productionHistory||[]).map(r=>fmtDate(r.report_date||r.Report_Date)),
+    ...(DATA.bagsHistory||[]).map(r=>fmtDate(r.report_date||r.Report_Date)),
+    ...(DATA.feedUnitData||[]).map(r=>fmtDate(r.Report_Date||r.report_date)),
+    ...(DATA.production||[]).map(r=>fmtDate(r.report_date||r.Report_Date)),
+    ...(DATA.bags||[]).map(r=>fmtDate(r.report_date||r.Report_Date))
+  ].filter(Boolean))].sort();
+
+  function stockRowsForDate(d){
+    const rows=(DATA.stockHistory||[]).filter(r=>txDate(r)===d);
+    if(rows.length){
+      const map=new Map();
+      rows.forEach(r=>{const k=String(r.material||"").toUpperCase();if(!k)return;if(!map.has(k))map.set(k,{material:r.material,transactions:[]});map.get(k).transactions.push(r)});
+      return [...map.values()].map(g=>{
+        const closing=[...g.transactions].reverse().find(t=>txType(t)==="CL. STOCK");
+        const master=masterInfo(g.material);
+        return {...g,closing:closing?val(closing.for_day):0,unit:master.unit||"MT"};
+      });
+    }
+    return (DATA.stock||[]).map(x=>({...x,transactions:x.transactions||[]})).filter(x=>x.material);
+  }
+  function txFor(material,d){
+    const rows=(DATA.stockHistory||[]).filter(r=>String(r.material||"").toUpperCase()===String(material||"").toUpperCase() && txDate(r)===d);
+    if(rows.length)return rows;
+    const x=(DATA.stock||[]).find(r=>String(r.material||"").toUpperCase()===String(material||"").toUpperCase());
+    return (x?.transactions||[]).filter(r=>!d||txDate(r)===d);
+  }
+  function allTx(material){
+    const hist=(DATA.stockHistory||[]).filter(r=>String(r.material||"").toUpperCase()===String(material||"").toUpperCase());
+    if(hist.length)return hist;
+    const x=(DATA.stock||[]).find(r=>String(r.material||"").toUpperCase()===String(material||"").toUpperCase());
+    return x?.transactions||[];
+  }
+  function masterInfo(material){
+    const mm=DATA.materialMaster||[];
+    const exact=mm.find(x=>String(x.material||x.Material||"").toUpperCase()===String(material||"").toUpperCase());
+    if(exact)return {reorder:val(exact.reorder_level??exact.Reorder_Level??exact.reorderLevel),unit:exact.unit||exact.Unit||"MT"};
+    const ri=(DATA.reorder_items||[]).find(x=>String(x.material||x.Material||x.name||"").toUpperCase()===String(material||"").toUpperCase());
+    if(ri)return {reorder:val(ri.reorder_level??ri.Reorder_Level??ri.reorderLevel),unit:ri.unit||ri.Unit||"MT"};
+    const base=(DATA.stock||[]).find(x=>String(x.material||"").toUpperCase()===String(material||"").toUpperCase());
+    return {reorder:val(base?.reorder_level??base?.reorderLevel??base?.Reorder_Level),unit:base?.unit||"MT"};
+  }
+  function isConsumption(t){return txType(t).includes("CONSUMPT")}
+  function isReceipt(t){const s=txType(t);return s==="PURCHASE"||s==="RECEIVED"||s.includes("TRANSFER FROM")||s==="GAIN"}
+  function dailyRM(material,d,type){
+    return txFor(material,d).filter(t=>type==="CONSUMPTION"?isConsumption(t):type==="PURCHASE"?isReceipt(t):type==="TRANSFER"?txType(t).includes("TRANSFER"):true).reduce((a,t)=>a+val(t.for_day),0);
+  }
+  function monthRM(material,d,type){
+    const rows=allTx(material);
+    const sameMonth=rows.filter(t=>String(txDate(t)).slice(0,7)===String(d).slice(0,7));
+    return sameMonth.filter(t=>type==="CONSUMPTION"?isConsumption(t):type==="PURCHASE"?isReceipt(t):true).reduce((a,t)=>a+val(t.for_month),0);
+  }
+  function consumptionHistory(material,d){
+    const rows=allTx(material).filter(isConsumption).map(t=>({d:txDate(t),v:val(t.for_day)})).filter(x=>x.d&&x.v>0&&x.d<=d);
+    const last30=rows.slice().sort((a,b)=>a.d.localeCompare(b.d)).filter(x=>new Date(x.d)>=new Date(new Date(d+"T00:00:00").getTime()-29*86400000));
+    return last30.length?last30.reduce((a,x)=>a+x.v,0)/last30.length:0;
+  }
+  function rmStatus(closing,reorder,avg){
+    if(reorder>0 && closing<reorder)return ["CRITICAL","critical"];
+    if(reorder>0 && closing<=reorder*1.15)return ["NEAR REORDER","near"];
+    if(avg>0 && closing/avg<3)return ["LOW COVER","near"];
+    if(!reorder && avg<=0)return ["NO LEVEL","unknown"];
+    return ["HEALTHY","healthy"];
+  }
+  function rmRows(d){
+    const base=stockRowsForDate(d);
+    return base.map(x=>{
+      const m=masterInfo(x.material), avg=consumptionHistory(x.material,d), closing=val(x.closing);
+      const rec=dailyRM(x.material,d,"PURCHASE"), cover=avg>0?closing/avg:null;
+      const st=rmStatus(closing,m.reorder,avg);
+      return {material:x.material,closing,unit:m.unit||x.unit||"MT",avg,received:rec,reorder:m.reorder,cover,status:st[0],cls:st[1]};
+    }).sort((a,b)=>a.closing-b.closing);
+  }
+  function feedRows(d){
+    return (DATA.feedUnitData||[]).filter(r=>fmtDate(r.Report_Date||r.report_date)===d);
+  }
+  function feedTotals(d){
+    const rows=feedRows(d);
+    const sum=k=>rows.reduce((a,r)=>a+val(r[k]),0);
+    return {opening:sum("Opening_Day_MT"),production:sum("Production_Day_MT"),dispatch:sum("Dispatch_Day_MT"),transfer:sum("Transfer_Day_MT"),closing:sum("Closing_Day_MT")};
+  }
+  function feedMonth(d){
+    // FEED_UNIT_DATA contains product-level month fields. Sum the latest row per product for the selected date.
+    const rows=feedRows(d), map={};
+    rows.forEach(r=>{const p=String(r.Product||"").toUpperCase();if(p)map[p]=r});
+    const sum=k=>Object.values(map).reduce((a,r)=>a+val(r[k]),0);
+    return {production:sum("Production_Month_MT"),dispatch:sum("Dispatch_Month_MT")};
+  }
+  function prodRows(d){
+    return (VIEW_DATE?(DATA.productionHistory||[]).filter(r=>fmtDate(r.report_date||r.Report_Date)===d):(DATA.production||[]).filter(r=>!d||fmtDate(r.report_date||r.Report_Date)===d));
+  }
+  function bagRows(d){
+    return (VIEW_DATE?(DATA.bagsHistory||[]).filter(r=>fmtDate(r.report_date||r.Report_Date)===d):(DATA.bags||[]).filter(r=>!d||fmtDate(r.report_date||r.Report_Date)===d));
+  }
+  function ppMaster(product){return masterInfo(product)}
+  function bagStatus(r){
+    const m=ppMaster(r.product),c=val(r.closing);
+    if(m.reorder>0&&c<m.reorder)return ["BELOW REORDER","critical"];
+    if(m.reorder>0&&c<=m.reorder*1.15)return ["LOW STOCK","near"];
+    return ["HEALTHY","healthy"];
+  }
+  function calcProcessLoss(rows){
+    const valid=rows.filter(r=>Number.isFinite(Number(r.process_loss)));
+    if(!valid.length)return 0;
+    // Weighted process loss by standard output where possible.
+    const totalStd=valid.reduce((a,r)=>a+val(r.standard_output),0);
+    if(totalStd>0)return valid.reduce((a,r)=>a+val(r.standard_output)*val(r.process_loss),0)/totalStd;
+    return valid.reduce((a,r)=>a+val(r.process_loss),0)/valid.length;
+  }
+  function rmTotals(d){
+    const rows=rmRows(d);
+    return {
+      closing:rows.reduce((a,r)=>a+((r.unit==="KG"?r.closing/1000:r.closing)||0),0),
+      consumption:rows.reduce((a,r)=>a+((r.unit==="KG"?dailyRM(r.material,d,"CONSUMPTION")/1000:dailyRM(r.material,d,"CONSUMPTION"))||0),0),
+      received:rows.reduce((a,r)=>a+((r.unit==="KG"?r.received/1000:r.received)||0),0)
+    };
+  }
+  function ppTotals(d){
+    const rows=bagRows(d);
+    return {closing:rows.reduce((a,r)=>a+val(r.closing),0),received:rows.reduce((a,r)=>a+val(r.received),0),issue:rows.reduce((a,r)=>a+val(r.issue),0),damage:rows.reduce((a,r)=>a+val(r.damage),0)};
+  }
+  function reorderItems(rows){return rows.filter(r=>r.status==="CRITICAL")}
+  function quality(d){
+    const issues=[];
+    const rows=rmRows(d);
+    const critical=rows.filter(r=>r.status==="CRITICAL").length;
+    const reorderMissing=rows.filter(r=>!r.reorder).length;
+    const p=prodRows(d), b=bagRows(d), f=feedRows(d);
+    p.forEach(r=>{if(val(r.actual_output)===0)issues.push(["warning","Production 0",r.product+" has zero actual output"]);if(r.output_percentage==null)issues.push(["warning","Output % missing",r.product]);if(r.process_loss!=null&&Math.abs(val(r.process_loss))>10)issues.push(["warning","Process loss abnormal",r.product+" · "+fmtN(r.process_loss)+"%"])});
+    b.forEach(r=>{const calc=val(r.opening)+val(r.received)-val(r.issue)-val(r.damage);if(Math.abs(calc-val(r.closing))>.01)issues.push(["mismatch","PP bag closing mismatch",r.product])});
+    f.forEach(r=>{const o=r.Opening_Day_MT,pd=r.Production_Day_MT,tr=r.Transfer_Day_MT,di=r.Dispatch_Day_MT,c=r.Closing_Day_MT;if([o,c].every(x=>x!=null)){const calc=val(o)+val(pd)+val(tr)-val(di);if(Math.abs(calc-val(c))>.05)issues.push(["mismatch","Feed opening/closing mismatch",r.Product])}});
+    rows.forEach(r=>{if(r.reorder<=0)issues.push(["warning","Reorder level missing",r.material])});
+    const neg=[...p,...b,...f].some(r=>Object.values(r).some(v=>typeof v==="number"&&v<0));
+    if(neg)issues.push(["critical","Negative value detected","One or more source records contain a negative numeric value"]);
+    const dup=new Set(), duplicates=[];
+    (DATA.stockHistory||[]).filter(r=>txDate(r)===d).forEach(r=>{const k=[r.material,txType(r),r.for_day,r.for_month].join("|");if(dup.has(k))duplicates.push(r);else dup.add(k)});
+    if(duplicates.length)issues.push(["mismatch","Duplicate transactions",duplicates.length+" duplicate row(s) detected"]);
+    return {issues,critical,missing:reorderMissing,score:Math.max(0,100-Math.min(80,issues.length*4)-Math.min(15,reorderMissing)),unusual:issues.filter(x=>x[0]==="warning").length,mismatch:issues.filter(x=>x[0]==="mismatch").length};
+  }
+  function renderOverview(){
+    const d=selectedDate(), f=feedTotals(d), m=feedMonth(d), rm=rmTotals(d), pp=ppTotals(d), p=prodRows(d), q=quality(d), rows=rmRows(d);
+    text("ovProdDay",fmtN(f.production));text("ovDispDay",fmtN(f.dispatch));text("ovFeedClosing",fmtN(f.closing));text("ovRMConsumption",fmtN(rm.consumption));text("ovRMReceived",fmtN(rm.received));text("ovProcessLoss",fmtN(calcProcessLoss(p)));text("ovBagClosing",fmt0(pp.closing));text("ovReorder",reorderItems(rows).length);
+    text("mtdProd",fmtN(m.production));text("mtdDisp",fmtN(m.dispatch));text("mtdPurchase",fmtN(rm.received));text("mtdConsumption",fmtN(rm.consumption));
+    text("dqScore",q.score+"%");text("dqCritical",q.critical);text("dqUnusual",q.unusual);text("dqMismatch",q.mismatch);
+    const bars=$("dqMiniBars");if(bars)bars.innerHTML=[q.score,Math.max(0,q.score-4),Math.max(0,q.score-7),Math.max(0,q.score-2),Math.max(0,q.score-9),Math.max(0,q.score-3)].map(v=>`<i style="height:${Math.max(6,Math.round(v/3))}px"></i>`).join("");
+    const att=[];
+    reorderItems(rows).slice(0,4).forEach(r=>att.push(["critical","🔴",r.material,`Closing ${fmtN(r.closing)} ${r.unit} · Reorder ${fmtN(r.reorder)} ${r.unit}`]));
+    rows.filter(r=>r.status==="NEAR REORDER").slice(0,3).forEach(r=>att.push(["warning","🟡",r.material,`Cover ${r.cover===null?"--":fmtN(r.cover)+" days"}`]));
+    p.filter(r=>val(r.process_loss)>5).sort((a,b)=>val(b.process_loss)-val(a.process_loss)).slice(0,3).forEach(r=>att.push(["warning","🟡",r.product,`Process loss ${fmtN(r.process_loss)}%`]));
+    q.issues.filter(x=>x[0]==="mismatch").slice(0,2).forEach(x=>att.push(["warning","🟠",x[1],x[2]]));
+    const host=$("attentionList");
+    if(host)host.innerHTML=att.length?att.slice(0,6).map(x=>`<div class="attention-row"><span class="attention-icon">${x[1]}</span><div class="attention-main"><b>${esc(x[2])}</b><small>${esc(x[3])}</small></div><span class="attention-tag ${x[0]==="warning"?"warn":""}">${x[0]==="critical"?"ACTION":"CHECK"}</span></div>`).join(""):`<div class="attention-row"><span class="attention-icon">🟢</span><div class="attention-main"><b>No immediate attention items</b><small>Current source data is within the configured checks.</small></div><span class="attention-tag ok">OK</span></div>`;
+  }
+  function renderInventory(){
+    const d=selectedDate(), rows=rmRows(d), total=rmTotals(d), crit=rows.filter(r=>r.status==="CRITICAL"), low=rows.filter(r=>r.status==="NEAR REORDER");
+    text("rmClosingTotal",fmtN(total.closing));text("rmReorderCount",crit.length);text("rmLowCover",low.length);
+    const body=$("rmTableBody");if(body)body.innerHTML=rows.map(r=>`<tr data-name="${esc(r.material).toLowerCase()}" onclick="openMaterialDetails('${jsq(r.material)}')"><td><span class="material-name">${esc(r.material)}</span><span class="material-unit">${esc(r.unit)}</span></td><td>${fmtN(r.closing)}</td><td>${r.avg?fmtN(r.avg):"--"}</td><td>${fmtN(r.received)}</td><td>${r.reorder?fmtN(r.reorder):"--"}</td><td>${r.cover==null?"--":fmtN(r.cover)+"d"}</td><td><span class="status ${r.cls}">${r.status}</span></td></tr>`).join("")||`<tr><td colspan="7" class="empty">No raw material data</td></tr>`;
+    const rc=$("reorderCards");if(rc)rc.innerHTML=rows.filter(r=>r.status!=="HEALTHY").slice(0,12).map(r=>`<div class="reorder-card"><div><b>${esc(r.material)}</b><small>${esc(r.status)} · Cover ${r.cover==null?"--":fmtN(r.cover)+" days"}</small></div><strong>${fmtN(r.closing)} ${esc(r.unit)}</strong></div>`).join("")||`<div class="empty">All configured reorder items are healthy.</div>`;
+    renderMovementTab(currentMovement||"CONSUMPTION");
+  }
+  let currentMovement="CONSUMPTION";
+  window.renderMovementTab=function(type,btn){
+    currentMovement=type;
+    document.querySelectorAll("#view-inventory .tabs button").forEach(b=>b.classList.remove("active"));if(btn)btn.classList.add("active");
+    const d=selectedDate(), rows=rmRows(d), list=$("movementList");
+    if(!list)return;
+    list.innerHTML=rows.map(r=>{
+      const v=type==="CONSUMPTION"?dailyRM(r.material,d,"CONSUMPTION"):type==="PURCHASE"?dailyRM(r.material,d,"PURCHASE"):type==="TRANSFER"?dailyRM(r.material,d,"TRANSFER"):r.closing;
+      return `<div class="data-row" onclick="openMaterialDetails('${jsq(r.material)}')"><div class="data-main"><b>${esc(r.material)}</b><small>${type==="STOCK"?"Closing Stock":type==="TRANSFER"?"Transfers":type==="PURCHASE"?"Received / Purchase":"Daily Consumption"}</small></div><div class="data-value"><b>${fmtN(v)} ${esc(r.unit)}</b><small>${r.cover==null?"":fmtN(r.cover)+" days cover"}</small></div></div>`;
+    }).join("")||`<div class="empty">No movement data</div>`;
+  };
+  window.filterRM=function(){const q=($("rmSearch")?.value||"").toLowerCase();document.querySelectorAll("#rmTableBody tr").forEach(r=>r.style.display=r.dataset.name.includes(q)?"":"none")};
+  function renderProductionPage(){
+    const d=selectedDate(), rows=prodRows(d), total=rows.reduce((a,r)=>a+val(r.actual_output),0), std=rows.reduce((a,r)=>a+val(r.standard_output),0), out=std?total/std*100:null, loss=calcProcessLoss(rows);
+    text("prodTotal",fmt0(total)+" Bags");text("prodStandard",fmt0(std));text("prodEfficiency",out==null?"--":fmtN(out)+"%");text("prodLoss",fmtN(loss)+"%");text("prodLossQty",fmtN(rows.reduce((a,r)=>a+Math.max(0,val(r.standard_output)-val(r.actual_output)),0)));
+    const list=$("productionTable");if(list)list.innerHTML=rows.slice().sort((a,b)=>val(b.actual_output)-val(a.actual_output)).map(r=>`<div class="data-row" onclick="openProductDetails('${jsq(r.product)}')"><div class="data-main"><b>${esc(r.product)}</b><small>Output ${r.output_percentage==null?"--":fmtN(r.output_percentage)+"%"} · Loss ${r.process_loss==null?"--":fmtN(r.process_loss)+"%"}${r.remarks?" · "+esc(r.remarks):""}</small></div><div class="data-value"><b>${fmt0(r.actual_output)} Bags</b><small>Std ${fmt0(r.standard_output)}</small></div></div>`).join("")||`<div class="empty">No production data</div>`;
+    const lt=$("lossTable");if(lt)lt.innerHTML=rows.filter(r=>r.process_loss!=null).sort((a,b)=>val(b.process_loss)-val(a.process_loss)).map(r=>`<div class="loss-row"><b>${esc(r.product)}</b><span>${fmtN(r.output_percentage)}%</span><span class="${val(r.process_loss)>5?"loss-high":"loss-normal"}">${fmtN(r.process_loss)}%</span><span>${val(r.process_loss)>5?"HIGH":"OK"}</span></div>`).join("")||`<div class="empty">No process loss data</div>`;
+    drawSeries("productionTrendCanvas",dateSeries("feedProduction"),"MT");
+  }
+  function renderFeedPage(){
+    const d=selectedDate(), f=feedTotals(d), rows=feedRows(d);
+    text("feedOpening",fmtN(f.opening));text("feedProduction",fmtN(f.production));text("feedDispatch",fmtN(f.dispatch));text("feedTransfer",fmtN(f.transfer));text("feedClosing",fmtN(f.closing));
+    const host=$("feedTable");if(host)host.innerHTML=rows.map(r=>{const p=r.Product||"--";return `<div class="data-row" onclick="openFeedProductDetails('${jsq(p)}')"><div class="data-main"><b>${esc(p)}</b><small>Opening ${fmtN(r.Opening_Day_MT)} · Dispatch ${fmtN(r.Dispatch_Day_MT)} · Closing ${fmtN(r.Closing_Day_MT)}</small></div><div class="data-value"><b>${fmtN(r.Production_Day_MT)} MT</b><small>Month ${fmtN(r.Production_Month_MT)} MT</small></div></div>`}).join("")||`<div class="empty">No Feed Unit data</div>`;
+  }
+  function renderBagsPage(){
+    const d=selectedDate(), rows=bagRows(d), t=ppTotals(d);
+    text("bagClosingTotal",fmt0(t.closing));text("bagReceivedTotal",fmt0(t.received));text("bagIssueTotal",fmt0(t.issue));text("bagDamageTotal",fmt0(t.damage));
+    const body=$("bagTableBody");if(body)body.innerHTML=rows.map(r=>{const st=bagStatus(r);return `<tr onclick="openBagProduct('${jsq(r.product)}')"><td><span class="material-name">${esc(r.product)}</span></td><td>${fmt0(r.opening)}</td><td>${fmt0(r.received)}</td><td>${fmt0(r.issue)}</td><td>${fmt0(r.damage)}</td><td>${fmt0(r.closing)}</td><td><span class="status ${st[1]}">${st[0]}</span></td></tr>`}).join("")||`<tr><td colspan="7" class="empty">No PP Bag data</td></tr>`;
+  }
+  function renderAlertsPage(){
+    const d=selectedDate(), rows=rmRows(d), p=prodRows(d), q=quality(d), alerts=[];
+    rows.filter(r=>r.status==="CRITICAL").forEach(r=>alerts.push(["critical","🔴",r.material,`Below reorder level · ${fmtN(r.closing)} ${r.unit} vs ${fmtN(r.reorder)} ${r.unit}`]));
+    rows.filter(r=>r.status==="NEAR REORDER").forEach(r=>alerts.push(["warning","🟡",r.material,`Near reorder · cover ${r.cover==null?"--":fmtN(r.cover)+" days"}`]));
+    p.filter(r=>val(r.process_loss)>5).forEach(r=>alerts.push(["warning","🟡",r.product,`Process loss ${fmtN(r.process_loss)}%`]));
+    q.issues.forEach(x=>alerts.push([x[0]==="critical"?"critical":x[0]==="mismatch"?"warning":"warning",x[0]==="mismatch"?"🟠":"🟡",x[1],x[2]]));
+    const unique=[];const seen=new Set();alerts.forEach(a=>{const k=a[2]+"|"+a[3];if(!seen.has(k)){seen.add(k);unique.push(a)}});
+    text("alertCritical",unique.filter(a=>a[0]==="critical").length);text("alertWarning",unique.filter(a=>a[0]==="warning").length);text("alertInfo",0);
+    const host=$("alertsList");if(host)host.innerHTML=unique.length?unique.map(a=>`<div class="alert-card ${a[0]}"><span class="aicon">${a[1]}</span><div><b>${esc(a[2])}</b><small>${esc(a[3])}</small></div></div>`).join(""):`<div class="empty">No active alerts for the selected date.</div>`;
+    const badge=unique.length;const nb=$("navAlertBadge");if(nb){nb.textContent=badge;nb.classList.toggle("hidden",!badge)}
+    const bell=$("notifyBadge");if(bell){bell.textContent=badge;bell.classList.toggle("hidden",!badge)}
+  }
+  function renderTrendsPage(days=7){
+    const d=selectedDate(), dates=availableDates().filter(x=>x<=d).slice(-days);
+    drawLine("trProd",dates,dates.map(x=>feedTotals(x).production));
+    drawLine("trDisp",dates,dates.map(x=>feedTotals(x).dispatch));
+    drawLine("trCons",dates,dates.map(x=>rmTotals(x).consumption));
+    drawLine("trRecv",dates,dates.map(x=>rmTotals(x).received));
+    drawLine("trLoss",dates,dates.map(x=>calcProcessLoss(prodRows(x))));
+    drawLine("trClose",dates,dates.map(x=>feedTotals(x).closing));
+    drawLine("trBags",dates,dates.map(x=>ppTotals(x).issue));
+    drawLine("productionTrendCanvas",dates,dates.map(x=>feedTotals(x).production));
+  }
+  let trendDays=7;
+  window.setTrendDays=function(days,btn){trendDays=days;document.querySelectorAll(".trend-filter button,.seg button").forEach(b=>b.classList.remove("active"));if(btn)btn.classList.add("active");text("prodTrendLabel",days+" Days");renderTrendsPage(days)};
+  function dateSeries(type){
+    const d=selectedDate(), dates=availableDates().filter(x=>x<=d).slice(-trendDays);
+    return {dates,values:dates.map(x=>type==="feedProduction"?feedTotals(x).production:0)};
+  }
+  function drawSeries(id,series,unit){drawLine(id,series.dates,series.values)}
+  function drawLine(id,labels,values){
+    const c=$(id);if(!c)return;const ctx=c.getContext("2d"),dpr=devicePixelRatio||1,w=c.clientWidth||320,h=150;c.width=w*dpr;c.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const nums=values.map(v=>Number(v)||0);if(!nums.length){ctx.fillStyle="#718a9d";ctx.font="9px sans-serif";ctx.fillText("No trend data",10,70);return}
+    const max=Math.max(...nums,1),min=Math.min(...nums,0),range=max-min||1,p={l:26,r:7,t:10,b:23};
+    ctx.strokeStyle="#173b51";ctx.lineWidth=1;for(let i=0;i<4;i++){const y=p.t+(h-p.t-p.b)*i/3;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(w-p.r,y);ctx.stroke()}
+    ctx.strokeStyle="#1599ff";ctx.lineWidth=2;ctx.beginPath();nums.forEach((v,i)=>{const x=p.l+(w-p.l-p.r)*(nums.length===1?.5:i/(nums.length-1));const y=p.t+(h-p.t-p.b)*(1-(v-min)/range);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+    ctx.fillStyle="#1599ff";nums.forEach((v,i)=>{const x=p.l+(w-p.l-p.r)*(nums.length===1?.5:i/(nums.length-1));const y=p.t+(h-p.t-p.b)*(1-(v-min)/range);ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill()});
+    ctx.fillStyle="#6f899d";ctx.font="7px sans-serif";labels.forEach((l,i)=>{if(i===0||i===labels.length-1||i%Math.ceil(labels.length/4)===0){const x=p.l+(w-p.l-p.r)*(labels.length===1?.5:i/(labels.length-1));ctx.fillText(String(l).slice(5),x-10,h-6)}})
+  }
+  function openProcessLoss(){
+    const rows=prodRows(selectedDate()).filter(r=>r.process_loss!=null).sort((a,b)=>val(b.process_loss)-val(a.process_loss));
+    showModal("📉 Process Loss Analysis",`<div class="detail-section"><h3>Product-wise</h3>${rows.map(r=>detail(r.product,fmtN(r.process_loss)+" %")).join("")}</div>`);
+  }
+  window.openProcessLoss=openProcessLoss;
+  window.showView=function(name){
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    const target=$("view-"+name);if(target)target.classList.add("active");
+    document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+    if(name==="overview")renderOverview();
+    if(name==="production")renderProductionPage();
+    if(name==="inventory")renderInventory();
+    if(name==="feed")renderFeedPage();
+    if(name==="bags")renderBagsPage();
+    if(name==="alerts")renderAlertsPage();
+    if(name==="trends")renderTrendsPage(trendDays);
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+  // Preserve the original site's existing detail modals and search/date functions.
+  window.goHome=()=>showView("overview");
+  window.goTrend=()=>showView("trends");
+  window.openStockForecast=function(){
+    const rows=rmRows(selectedDate()).filter(r=>r.cover!=null).sort((a,b)=>a.cover-b.cover);
+    showModal("📦 Smart Reorder / Stock Cover",`<div class="detail-section"><h3>Automatic stock coverage</h3><div class="small-note">Cover = closing stock ÷ average daily consumption from available history. Reorder level comes from MATERIAL_MASTER/API when available.</div>${rows.slice(0,30).map(r=>`<div class="data-row"><div class="data-main"><b>${esc(r.material)}</b><small>${esc(r.status)} · Reorder ${fmtN(r.reorder)} ${esc(r.unit)}</small></div><div class="data-value"><b>${fmtN(r.cover)} d</b><small>${fmtN(r.closing)} ${esc(r.unit)}</small></div></div>`).join("")}</div>`);
+  };
+  window.openDataHealth=function(){
+    const q=quality(selectedDate());
+    const rows=rmRows(selectedDate());
+    const html=`<div class="detail-section"><h3>🛡 Data Quality</h3>${detail("Quality score",q.score+"%")}${detail("Critical",q.critical)}${detail("Unusual",q.unusual)}${detail("Mismatch",q.mismatch)}${detail("Reorder levels missing",q.missing)}</div>
+      <div class="detail-section"><h3>Automatic checks</h3>${q.issues.length?q.issues.slice(0,80).map(x=>`<div class="transaction">${detail(x[1],x[2])}</div>`).join(""):`<div class="empty">All configured checks are clear.</div>`}</div>`;
+    showModal("🛡 Data Quality / Accuracy",html);
+  };
+  // The original DATA engine calls renderDashboard(). Replace it with the new screen renderer.
+  window.renderDashboard=function(){
+    const d=selectedDate();text("reportDate",d||"Latest");text("selectedDateChip",VIEW_DATE?d:"Latest");
+    renderOverview();renderInventory();renderProductionPage();renderFeedPage();renderBagsPage();renderAlertsPage();renderTrendsPage(trendDays);
+  };
+  // Keep original date navigation, but ensure every view refreshes.
+  const oldSetViewDate=window.setViewDate;
+  window.setViewDate=function(date){VIEW_DATE=date?fmtDate(date):null;closeModal();window.renderDashboard();showToast?.(VIEW_DATE?`Dashboard set to ${VIEW_DATE}`:"Dashboard set to latest");};
+  // Re-render once the original API/cache layer has finished.
+  setTimeout(()=>{try{window.renderDashboard()}catch(e){console.error(e)}},80);
+})();
+</script>
+
 </body>
 </html>
