@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed MIS Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+    header{background:#111827;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+    header h1{margin:0;font-size:21px}.wrap{max-width:1200px;margin:24px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px}
+    .label{font-size:13px;color:#667085}.value{font-size:28px;font-weight:700;margin-top:7px}
+    .panel{background:#fff;border:1px solid #e5e7eb;border-radius:12px;margin-top:20px;padding:18px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}input,select,button{padding:10px 12px;border:1px solid #d0d5dd;border-radius:8px;background:#fff}
+    button{cursor:pointer;background:#111827;color:#fff;border-color:#111827}.status{font-size:13px;color:#667085}
+    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:700px}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:13px}th{background:#f9fafb}
+    .error{color:#b42318;background:#fef3f2;padding:12px;border-radius:8px}.ok{color:#027a48}
+    @media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header><h1>Feed MIS Dashboard</h1><span id="connection" class="status">Not connected</span></header>
+<div class="wrap">
+  <div class="grid">
+    <div class="card"><div class="label">Total Records</div><div id="total" class="value">—</div></div>
+    <div class="card"><div class="label">Latest Date</div><div id="latest" class="value">—</div></div>
+    <div class="card"><div class="label">Materials</div><div id="materials" class="value">—</div></div>
+    <div class="card"><div class="label">Status</div><div id="status" class="value" style="font-size:20px">—</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="toolbar">
+      <input id="search" placeholder="Search material..." />
+      <input id="date" type="date" />
+      <button id="refresh">Refresh</button>
+    </div>
+    <div id="message" class="status">Configure Supabase credentials, then refresh.</div>
+    <div class="table-wrap">
+      <table><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  FRESH SUPABASE-ONLY SITE
+  No Google API / Google Sheets dependency.
+
+  1) Create a Supabase project.
+  2) Create a table named: feed_mis
+  3) Change the two values below.
+  4) Adjust column names only if your table uses different names.
+*/
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const TABLE_NAME = "feed_mis";
+
+let db = null;
+let rows = [];
+
+function configured(){
+  return SUPABASE_URL.startsWith("http") &&
+         !SUPABASE_URL.includes("YOUR_") &&
+         !SUPABASE_ANON_KEY.includes("YOUR_");
+}
+
+async function loadData(){
+  const msg = document.getElementById("message");
+  msg.textContent = "Loading data...";
+  document.getElementById("connection").textContent = "Connecting...";
+  if(!configured()){
+    msg.innerHTML = '<div class="error">Supabase URL and anon key are not configured in index.html.</div>';
+    document.getElementById("connection").textContent = "Setup required";
+    return;
+  }
+
+  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { data, error } = await db.from(TABLE_NAME).select("*").order("created_at",{ascending:false}).limit(1000);
+
+  if(error){
+    msg.innerHTML = '<div class="error">Supabase error: '+escapeHtml(error.message)+'</div>';
+    document.getElementById("connection").textContent = "Error";
+    return;
+  }
+
+  rows = data || [];
+  document.getElementById("connection").textContent = "Supabase connected";
+  document.getElementById("status").textContent = "Online";
+  render();
+}
+
+function render(){
+  const search = document.getElementById("search").value.trim().toLowerCase();
+  const date = document.getElementById("date").value;
+
+  let filtered = rows.filter(r=>{
+    const material = String(r.material_name ?? r.material ?? r.part_name ?? "").toLowerCase();
+    const rowDate = String(r.date ?? r.mis_date ?? "").slice(0,10);
+    return (!search || material.includes(search)) && (!date || rowDate === date);
+  });
+
+  document.getElementById("total").textContent = filtered.length;
+  const mats = new Set(filtered.map(r=>r.material_name ?? r.material ?? r.part_name).filter(Boolean));
+  document.getElementById("materials").textContent = mats.size;
+
+  const dates = filtered.map(r=>r.date ?? r.mis_date ?? r.created_at).filter(Boolean).sort();
+  document.getElementById("latest").textContent = dates.length ? String(dates[dates.length-1]).slice(0,10) : "—";
+
+  const cols = filtered.length ? Object.keys(filtered[0]) : [];
+  document.getElementById("thead").innerHTML = cols.map(c=>"<th>"+escapeHtml(c)+"</th>").join("");
+  document.getElementById("tbody").innerHTML = filtered.map(r =>
+    "<tr>"+cols.map(c=>"<td>"+escapeHtml(formatValue(r[c]))+"</td>").join("")+"</tr>"
+  ).join("");
+
+  document.getElementById("message").textContent =
+    filtered.length ? `${filtered.length} record(s) loaded.` : "No records found.";
+}
+
+function formatValue(v){
+  if(v === null || v === undefined) return "";
+  if(typeof v === "object") return JSON.stringify(v);
+  return String(v);
+}
+function escapeHtml(v){
+  return String(v).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+document.getElementById("refresh").addEventListener("click", loadData);
+document.getElementById("search").addEventListener("input", render);
+document.getElementById("date").addEventListener("change", render);
+loadData();
+</script>
+</body>
+</html>
