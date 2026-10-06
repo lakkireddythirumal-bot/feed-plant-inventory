@@ -1,191 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feed MIS Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
-    header{background:#111827;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
-    header h1{margin:0;font-size:21px}.wrap{max-width:1200px;margin:24px auto;padding:0 16px}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px}
-    .label{font-size:13px;color:#667085}.value{font-size:28px;font-weight:700;margin-top:7px}
-    .panel{background:#fff;border:1px solid #e5e7eb;border-radius:12px;margin-top:20px;padding:18px}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}input,select,button{padding:10px 12px;border:1px solid #d0d5dd;border-radius:8px;background:#fff}
-    button{cursor:pointer;background:#111827;color:#fff;border-color:#111827}.status{font-size:13px;color:#667085}
-    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:700px}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:13px}th{background:#f9fafb}
-    .error{color:#b42318;background:#fef3f2;padding:12px;border-radius:8px}.ok{color:#027a48}
-    @media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.grid{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Feed MIS</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;color:#182230;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+header{background:#111827;color:#fff;padding:18px 18px 16px;position:sticky;top:0;z-index:20}
+.header-line{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:22px;margin:0;font-weight:750}
+.connection{font-size:12px;color:#98a2b3}
+.wrap{max-width:850px;margin:0 auto;padding:16px}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.summary-card{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:14px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.summary-label{font-size:12px;color:#667085}
+.summary-value{font-size:23px;font-weight:800;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:12px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.toolbar{display:grid;grid-template-columns:1fr 150px 82px;gap:8px;margin-bottom:10px}
+input,button{height:42px;border:1px solid #d0d5dd;border-radius:9px;font-size:14px;padding:0 12px;background:#fff}
+button{background:#111827;color:#fff;border-color:#111827;font-weight:650;cursor:pointer}
+.message{font-size:12px;color:#667085;margin:8px 2px 10px}
+.error{color:#b42318;background:#fef3f2;padding:10px;border-radius:9px}
+.group{border:1px solid #e4e7ec;border-radius:12px;overflow:hidden;margin:10px 0;background:#fff}
+.group-title{padding:12px 14px;background:#f8fafc;display:flex;align-items:center;justify-content:space-between;font-weight:750;font-size:14px}
+.group-count{font-size:11px;font-weight:600;color:#667085;background:#eef2f6;padding:3px 7px;border-radius:20px}
+.material{border-top:1px solid #eef0f3}
+.material-row{width:100%;border:0;border-radius:0;background:#fff;color:#182230;display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;text-align:left;padding:13px 14px;cursor:pointer}
+.material-row:hover{background:#fafbfc}
+.material-name{font-size:14px;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:8px}
+.stock{text-align:right;min-width:108px}.stock-badge{display:inline-flex;align-items:baseline;gap:5px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:6px 9px}.stock-unit{font-size:10px;color:#667085;font-weight:600}.stock-badge .stock-number{color:#166534}
+.stock-label{display:block;font-size:10px;color:#667085}
+.stock-number{display:block;font-size:16px;font-weight:800;margin-top:2px}
+.chevron{font-size:22px;color:#98a2b3;line-height:1;transition:transform .15s}
+.material.open .chevron{transform:rotate(90deg)}
+.detail{display:none;padding:0 12px 12px;background:#fbfcfe}
+.material.open .detail{display:block}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.metric{background:#fff;border:1px solid #e4e7ec;border-radius:9px;padding:9px 10px}
+.metric-label{font-size:10px;color:#667085}
+.metric-value{font-size:14px;font-weight:750;margin-top:3px;word-break:break-word}
+.detail-date{font-size:11px;color:#667085;margin-top:9px}
+.empty{padding:25px 10px;text-align:center;color:#667085;font-size:13px}
+@media(max-width:560px){
+ .toolbar{grid-template-columns:minmax(0,1fr) 110px 78px}
+ .summary-value{font-size:20px}
+}
+@media(max-width:390px){
+ .toolbar{grid-template-columns:1fr 76px}
+ .toolbar button{grid-column:2}
+}
+</style>
 </head>
 <body>
-<header><h1>Feed MIS Dashboard</h1><span id="connection" class="status">Not connected</span></header>
-<div class="wrap">
-  <div class="grid">
-    <div class="card"><div class="label">Total Records</div><div id="total" class="value">—</div></div>
-    <div class="card"><div class="label">Latest Activity</div><div id="latest" class="value">—</div></div>
-    <div class="card"><div class="label">Materials</div><div id="materials" class="value">—</div></div>
-    <div class="card"><div class="label">Status</div><div id="status" class="value" style="font-size:20px">—</div></div>
+<header>
+  <div class="header-line">
+    <h1>Feed MIS</h1>
+    <span id="connection" class="connection">Connecting...</span>
   </div>
+</header>
 
-  <div class="panel">
+<main class="wrap">
+  <section class="summary">
+    <div class="summary-card"><div class="summary-label">Materials</div><div id="materials" class="summary-value">—</div></div>
+    <div class="summary-card"><div class="summary-label">Latest Activity</div><div id="latest" class="summary-value">—</div></div>
+  </section>
+
+  <section class="panel">
     <div class="toolbar">
-      <input id="search" placeholder="Search material..." />
-      <input id="date" type="date" />
+      <input id="search" placeholder="Search material or category">
+      <input id="date" type="date">
       <button id="refresh">Refresh</button>
     </div>
-    <div id="message" class="status">Configure Supabase credentials, then refresh.</div>
+    <div id="message" class="message">Loading...</div>
     <div id="groups"></div>
-  </div>
-</div>
+  </section>
+</main>
 
 <script>
-/*
-  FRESH SUPABASE-ONLY SITE
-  No Google API / Google Sheets dependency.
+const SUPABASE_URL="https://iqxprkmainafqjodpfdk.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_54VfHOULYN31VknExbmdVA_mYxhtU-7";
+const TABLE_NAME="feed_inventory";
 
-  1) Create a Supabase project.
-  2) Create a table named: feed_mis
-  3) Change the two values below.
-  4) Adjust column names only if your table uses different names.
-*/
-const SUPABASE_URL = "https://iqxprkmainafqjodpfdk.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_54VfHOULYN31VknExbmdVA_mYxhtU-7";
-const TABLE_NAME = "feed_inventory";
+let db=null;
+let rows=[];
 
-let db = null;
-let rows = [];
+function getName(r){
+  return String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "Unnamed").trim() || "Unnamed";
+}
+function getCategory(r){
+  return String(r.category ?? "Uncategorized").trim() || "Uncategorized";
+}
+function getDate(r){
+  return r.activity_date ?? r.date ?? r.mis_date ?? r.imported_at ?? "";
+}
+function objectValue(v){
+  return v && typeof v==="object" && !Array.isArray(v) ? v : {};
+}
+function firstValue(obj,keys){
+  for(const k of keys){
+    if(Object.prototype.hasOwnProperty.call(obj,k)) return obj[k];
+  }
+  return "";
+}
+function cleanNumber(v){
+  if(v===null || v===undefined || v==="") return "—";
+  if(typeof v==="number") return Number.isInteger(v)?String(v):String(Number(v.toFixed(3)));
+  return String(v);
+}
+function escapeHtml(v){
+  return String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
 
-function configured(){
-  return SUPABASE_URL.startsWith("http") &&
-         !SUPABASE_URL.includes("YOUR_") &&
-         !SUPABASE_ANON_KEY.includes("YOUR_");
+function getDetailFields(r){
+  const month=objectValue(r.for_the_month);
+  const latest=objectValue(r.latest_activity);
+  // Monthly values are the primary detail source. Keep the original field names.
+  const source=Object.keys(month).length ? month : latest;
+  return Object.entries(source).filter(([k,v])=>k && v!==null && v!==undefined && v!=="");
+}
+function getClosing(r){
+  const month=objectValue(r.for_the_month);
+  const latest=objectValue(r.latest_activity);
+  const source={...latest,...month};
+  for(const k of ["Closing","CLOSING","closing"]) if(Object.prototype.hasOwnProperty.call(source,k)) return source[k];
+  return "";
+}
+function formatLabel(k){
+  return String(k).replace(/_/g," ").replace(/\s+/g," ").trim();
 }
 
 async function loadData(){
-  const msg = document.getElementById("message");
-  msg.textContent = "Loading data...";
-  document.getElementById("connection").textContent = "Connecting...";
-  if(!configured()){
-    msg.innerHTML = '<div class="error">Supabase URL and anon key are not configured in index.html.</div>';
-    document.getElementById("connection").textContent = "Setup required";
-    return;
-  }
+  const msg=document.getElementById("message");
+  msg.textContent="Loading...";
+  document.getElementById("connection").textContent="Connecting...";
 
-  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data, error } = await db.from(TABLE_NAME).select("*").order("imported_at",{ascending:false}).limit(1000);
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+  const {data,error}=await db.from(TABLE_NAME).select("*").order("imported_at",{ascending:false}).limit(1000);
 
   if(error){
-    msg.innerHTML = '<div class="error">Supabase error: '+escapeHtml(error.message)+'</div>';
-    document.getElementById("connection").textContent = "Error";
+    document.getElementById("connection").textContent="Connection error";
+    msg.innerHTML='<div class="error">'+escapeHtml(error.message)+'</div>';
+    document.getElementById("groups").innerHTML="";
     return;
   }
 
-  rows = data || [];
-  document.getElementById("connection").textContent = "Supabase connected";
-  document.getElementById("status").textContent = "Online";
+  rows=data||[];
+  const dates=rows.map(getDate).filter(Boolean).map(String).map(x=>x.slice(0,10)).sort();
+  if(dates.length && !document.getElementById("date").value) document.getElementById("date").value=dates[dates.length-1];
+  document.getElementById("connection").textContent="Supabase connected";
   render();
 }
 
 function render(){
-  const search = document.getElementById("search").value.trim().toLowerCase();
-  const date = document.getElementById("date").value;
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  const selectedDate=document.getElementById("date").value;
 
-  let filtered = rows.filter(r=>{
-    const material = String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "").toLowerCase();
-    const category = String(r.category ?? "").toLowerCase();
-    const rowDate = String(r.activity_date ?? r.date ?? r.mis_date ?? "").slice(0,10);
-    return (!search || material.includes(search) || category.includes(search)) &&
-           (!date || rowDate === date);
+  const filtered=rows.filter(r=>{
+    const name=getName(r).toLowerCase();
+    const cat=getCategory(r).toLowerCase();
+    const d=String(getDate(r)).slice(0,10);
+    return (!q || name.includes(q) || cat.includes(q)) && (!selectedDate || d===selectedDate);
   });
 
-  document.getElementById("total").textContent = filtered.length;
-  const mats = new Set(filtered.map(r=>r.sheet_name ?? r.material_name ?? r.material ?? r.part_name).filter(Boolean));
-  document.getElementById("materials").textContent = mats.size;
+  const uniqueMaterials=new Set(filtered.map(getName));
+  document.getElementById("materials").textContent=uniqueMaterials.size;
 
-  const dates = filtered.map(r=>r.activity_date ?? r.date ?? r.mis_date ?? r.imported_at).filter(Boolean).sort();
-  document.getElementById("latest").textContent = dates.length ? String(dates[dates.length-1]).slice(0,10) : "—";
+  const dates=filtered.map(getDate).filter(Boolean).map(String).sort();
+  document.getElementById("latest").textContent=dates.length?dates[dates.length-1].slice(0,10):"—";
 
-  const grouped = {};
+  const grouped={};
   filtered.forEach(r=>{
-    const category = String(r.category ?? "Uncategorized").trim() || "Uncategorized";
-    const name = String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "Unnamed").trim() || "Unnamed";
-    if(!grouped[category]) grouped[category] = [];
-    grouped[category].push({name, row:r});
+    const cat=getCategory(r);
+    if(!grouped[cat]) grouped[cat]=[];
+    grouped[cat].push(r);
   });
 
-  const categories = Object.keys(grouped).sort((a,b)=>a.localeCompare(b));
-  document.getElementById("groups").innerHTML = categories.map(category=>{
-    const items = grouped[category].sort((a,b)=>a.name.localeCompare(b.name));
+  const categories=Object.keys(grouped).sort((a,b)=>a.localeCompare(b));
+  const groups=document.getElementById("groups");
+
+  if(!categories.length){
+    groups.innerHTML='<div class="empty">No materials found.</div>';
+    document.getElementById("message").textContent="0 materials";
+    return;
+  }
+
+  groups.innerHTML=categories.map(cat=>{
+    const items=grouped[cat].sort((a,b)=>getName(a).localeCompare(getName(b)));
     return `
       <section class="group">
         <div class="group-title">
-          <span>${escapeHtml(category)}</span>
+          <span>${escapeHtml(cat)}</span>
           <span class="group-count">${items.length}</span>
         </div>
-        ${items.map(({name,row})=>{
-          const month = row.for_the_month && typeof row.for_the_month === "object" ? row.for_the_month : {};
-          const latest = row.latest_activity && typeof row.latest_activity === "object" ? row.latest_activity : {};
-          const closing = firstValue(month, ["Closing","closing","CLOSING"]);
-          const consumption = firstValue(month, ["Consumption","CONSUMPTION","Total Consumption","TOTAL CONSUMPTION"]);
-          const receipt = firstValue(month, ["Receipt","RECEIPT","Received","RECEIVED","GAIN","Gain"]);
-          const issue = firstValue(month, ["Issue","ISSUE","Sale","SALE"]);
-          const activityDate = row.activity_date ?? row.date ?? "";
-
-          const detailId = "d_" + Math.random().toString(36).slice(2);
+        ${items.map((r,i)=>{
+          const closing=getClosing(r); const fields=getDetailFields(r);
+          const id="m_"+btoa(unescape(encodeURIComponent(cat+"|"+getName(r)+"|"+i))).replace(/[^a-zA-Z0-9]/g,"");
           return `
-            <div class="material">
-              <div class="material-row" onclick="toggleDetail('${detailId}')">
-                <div class="material-name">${escapeHtml(name)}</div>
-                <div class="stock-value">
-                  <span class="stock-label">Closing Stock</span>
-                  <span class="stock-number">${escapeHtml(formatValue(closing))}</span>
-                </div>
-                <div class="chevron">›</div>
-              </div>
-              <div id="${detailId}" class="detail">
+            <div class="material" id="${id}">
+              <button class="material-row" type="button" onclick="toggleMaterial('${id}')">
+                <span class="material-name">${escapeHtml(getName(r))}</span>
+                <span class="stock"><span class="stock-badge"><span class="stock-number">${escapeHtml(cleanNumber(closing))}</span><span class="stock-unit">STOCK</span></span></span>
+                <span class="chevron">›</span>
+              </button>
+              <div class="detail">
                 <div class="detail-grid">
-                  <div class="metric"><span>Closing Stock</span><b>${escapeHtml(formatValue(closing))}</b></div>
-                  <div class="metric"><span>Consumption</span><b>${escapeHtml(formatValue(consumption))}</b></div>
-                  <div class="metric"><span>Receipt / Gain</span><b>${escapeHtml(formatValue(receipt))}</b></div>
-                  <div class="metric"><span>Issue / Sale</span><b>${escapeHtml(formatValue(issue))}</b></div>
+                  ${fields.map(([k,v])=>`<div class="metric"><div class="metric-label">${escapeHtml(formatLabel(k))}</div><div class="metric-value">${escapeHtml(cleanNumber(v))}</div></div>`).join("")}
                 </div>
-                <div class="json-extra">Activity Date: ${escapeHtml(formatValue(activityDate))}</div>
+                <div class="detail-date">Activity: ${escapeHtml(String(getDate(r)).slice(0,10))}</div>
               </div>
             </div>`;
         }).join("")}
       </section>`;
   }).join("");
 
-  document.getElementById("message").textContent =
-    filtered.length ? `${filtered.length} material record(s) loaded.` : "No records found.";
+  document.getElementById("message").textContent=`${uniqueMaterials.size} material(s)`;
 }
 
-function toggleDetail(id){
-  const el = document.getElementById(id);
-  if(el) el.classList.toggle("open");
+function toggleMaterial(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.classList.toggle("open");
 }
 
-function firstValue(obj, keys){
-  for(const k of keys){
-    if(Object.prototype.hasOwnProperty.call(obj,k)) return obj[k];
-  }
-  return "";
-}
-
-function formatValue(v){
-  if(v === null || v === undefined) return "";
-  if(typeof v === "object") return JSON.stringify(v);
-  return String(v);
-}
-function escapeHtml(v){
-  return String(v).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-}
-
-document.getElementById("refresh").addEventListener("click", loadData);
-document.getElementById("search").addEventListener("input", render);
-document.getElementById("date").addEventListener("change", render);
+document.getElementById("refresh").addEventListener("click",loadData);
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("date").addEventListener("change",render);
 loadData();
 </script>
 </body>
