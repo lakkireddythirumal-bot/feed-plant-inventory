@@ -1,234 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Feed MIS</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Feed MIS • Stock</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#f5f7fb;color:#182230;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-header{background:#111827;color:#fff;padding:18px 18px 16px;position:sticky;top:0;z-index:20}
-.header-line{display:flex;align-items:center;justify-content:space-between;gap:10px}
-h1{font-size:22px;margin:0;font-weight:750}
-.connection{font-size:12px;color:#98a2b3}
-.wrap{max-width:850px;margin:0 auto;padding:16px}
-.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
-.summary-card{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:14px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
-.summary-label{font-size:12px;color:#667085}
-.summary-value{font-size:23px;font-weight:800;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.panel{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:12px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
-.toolbar{display:grid;grid-template-columns:1fr 150px 82px;gap:8px;margin-bottom:10px}
-input,button{height:42px;border:1px solid #d0d5dd;border-radius:9px;font-size:14px;padding:0 12px;background:#fff}
-button{background:#111827;color:#fff;border-color:#111827;font-weight:650;cursor:pointer}
-.message{font-size:12px;color:#667085;margin:8px 2px 10px}
-.error{color:#b42318;background:#fef3f2;padding:10px;border-radius:9px}
-.group{border:1px solid #e4e7ec;border-radius:12px;overflow:hidden;margin:10px 0;background:#fff}
-.group-title{padding:12px 14px;background:#f8fafc;display:flex;align-items:center;justify-content:space-between;font-weight:750;font-size:14px}
-.group-count{font-size:11px;font-weight:600;color:#667085;background:#eef2f6;padding:3px 7px;border-radius:20px}
-.material{border-top:1px solid #eef0f3}
-.material-row{width:100%;border:0;border-radius:0;background:#fff;color:#182230;display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;text-align:left;padding:13px 14px;cursor:pointer}
-.material-row:hover{background:#fafbfc}
-.material-name{font-size:14px;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:8px}
-.stock{text-align:right;min-width:108px}.stock-badge{display:inline-flex;align-items:baseline;gap:5px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:6px 9px}.stock-unit{font-size:10px;color:#667085;font-weight:600}.stock-badge .stock-number{color:#166534}
-.stock-label{display:block;font-size:10px;color:#667085}
-.stock-number{display:block;font-size:16px;font-weight:800;margin-top:2px}
-.chevron{font-size:22px;color:#98a2b3;line-height:1;transition:transform .15s}
-.material.open .chevron{transform:rotate(90deg)}
-.detail{display:none;padding:0 12px 12px;background:#fbfcfe}
-.material.open .detail{display:block}
-.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.metric{background:#fff;border:1px solid #e4e7ec;border-radius:9px;padding:9px 10px}
-.metric-label{font-size:10px;color:#667085}
-.metric-value{font-size:14px;font-weight:750;margin-top:3px;word-break:break-word}
-.detail-date{font-size:11px;color:#667085;margin-top:9px}
-.empty{padding:25px 10px;text-align:center;color:#667085;font-size:13px}
-@media(max-width:560px){
- .toolbar{grid-template-columns:minmax(0,1fr) 110px 78px}
- .summary-value{font-size:20px}
-}
-@media(max-width:390px){
- .toolbar{grid-template-columns:1fr 76px}
- .toolbar button{grid-column:2}
-}
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#e6e9ef;--accent:#2563eb;--accent2:#eff6ff;--shadow:0 8px 24px rgba(15,23,42,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.wrap{max-width:1200px;margin:auto;padding:18px 20px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px}.title{font-size:22px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{font-size:12px;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px 10px;border-radius:999px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.select,.search{height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 12px;font-size:14px;outline:none}.select{min-width:170px}.search{flex:1;min-width:220px}
+.tabs{display:flex;gap:8px;overflow:auto;padding:14px 0 2px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap;cursor:pointer}.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{max-width:1200px;margin:auto;padding:20px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}.metric b{display:block;font-size:24px}.metric span{font-size:12px;color:var(--muted)}
+.section{margin:22px 0}.section h2{font-size:15px;margin:0 0 10px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);cursor:pointer;transition:.15s}.card:hover{transform:translateY(-1px);border-color:#c7d2fe}.cat{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.name{font-size:15px;font-weight:750;margin:7px 0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stock{display:flex;align-items:end;justify-content:space-between}.stock strong{font-size:25px}.stock small{font-size:11px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:50px 10px}.loading{padding:35px;text-align:center;color:var(--muted)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:30;padding:18px}.modal{background:#fff;max-width:850px;width:100%;max-height:90vh;overflow:auto;margin:auto;border-radius:18px}.mh{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}.close{border:0;background:#f3f4f6;border-radius:9px;width:34px;height:34px;font-size:20px;cursor:pointer}.mb{padding:20px}.detailTitle{font-size:20px;font-weight:800}.detailDate{font-size:12px;color:var(--muted);margin-top:4px}.detailSection{margin-top:20px}.detailSection h3{font-size:14px;margin:0 0 10px}.details{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px}.kv{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafbfc}.kv span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.kv b{font-size:14px}.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:14px;font-size:13px}
+@media(max-width:650px){.wrap,main{padding-left:14px;padding-right:14px}.summary{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.card{padding:13px}.stock strong{font-size:21px}.top{align-items:flex-start}.status{display:none}}@media(max-width:430px){.grid{grid-template-columns:1fr}.select{flex:1}}
 </style>
 </head>
 <body>
-<header>
-  <div class="header-line">
-    <h1>Feed MIS</h1>
-    <span id="connection" class="connection">Connecting...</span>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="summary">
-    <div class="summary-card"><div class="summary-label">Materials</div><div id="materials" class="summary-value">—</div></div>
-    <div class="summary-card"><div class="summary-label">Latest Activity</div><div id="latest" class="summary-value">—</div></div>
-  </section>
-
-  <section class="panel">
-    <div class="toolbar">
-      <input id="search" placeholder="Search material or category">
-      <input id="date" type="date">
-      <button id="refresh">Refresh</button>
-    </div>
-    <div id="message" class="message">Loading...</div>
-    <div id="groups"></div>
-  </section>
+<header><div class="wrap">
+  <div class="top"><div><div class="title">Feed MIS Stock</div><div class="sub">Category-wise • Date-wise • Material-wise</div></div><div id="status" class="status">Connecting…</div></div>
+  <div class="controls"><select id="date" class="select"></select><input id="search" class="search" placeholder="Search material…" /></div>
+  <div id="tabs" class="tabs"></div>
+</div></header>
+<main>
+  <div id="summary" class="summary"></div>
+  <div id="content"><div class="loading">Loading stock data…</div></div>
 </main>
-
+<div id="overlay" class="overlay"><div class="modal"><div class="mh"><div><div id="modalName" class="detailTitle"></div><div id="modalDate" class="detailDate"></div></div><button class="close" onclick="closeModal()">×</button></div><div id="modalBody" class="mb"></div></div></div>
 <script>
-const SUPABASE_URL="https://iqxprkmainafqjodpfdk.supabase.co";
-const SUPABASE_ANON_KEY="sb_publishable_54VfHOULYN31VknExbmdVA_mYxhtU-7";
-const TABLE_NAME="feed_inventory";
-
-let db=null;
-let rows=[];
-
-function getName(r){
-  return String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "Unnamed").trim() || "Unnamed";
+const SUPABASE_URL = 'https://iqxprkmainafqjodpfdk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_54VfHOULYN31VknExbmdVA_mYxhtU-7';
+const TABLE='feed_inventory';
+let rows=[], selectedDate='', selectedCategory='ALL';
+const $=id=>document.getElementById(id);
+const fmt=n=>typeof n==='number' ? n.toLocaleString(undefined,{maximumFractionDigits:3}) : (n??'—');
+const pretty=s=>String(s).replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+function closing(obj){ if(!obj||typeof obj!=='object') return null; return obj.Closing ?? obj.CLOSING ?? null; }
+function catLabel(c){return String(c||'OTHER').replace(/_/g,' ')}
+async function load(){
+ try{
+  const url=`${SUPABASE_URL}/rest/v1/${TABLE}?select=sheet_name,category,activity_date,latest_activity,for_the_month,for_the_year&order=activity_date.desc,sheet_name.asc`;
+  const r=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}});
+  if(!r.ok) throw new Error(await r.text());
+  rows=await r.json();
+  $('status').textContent='Supabase • Connected';
+  const dates=[...new Set(rows.map(x=>x.activity_date).filter(Boolean))].sort().reverse();
+  $('date').innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join('');
+  selectedDate=dates[0]||'';
+  $('date').value=selectedDate;
+  renderTabs(); render();
+ }catch(e){$('status').textContent='Connection error';$('content').innerHTML=`<div class="error"><b>Supabase connection failed</b><br>${String(e.message||e)}</div>`;}
 }
-function getCategory(r){
-  return String(r.category ?? "Uncategorized").trim() || "Uncategorized";
+function renderTabs(){
+ const cats=['ALL',...new Set(rows.filter(x=>x.activity_date===selectedDate).map(x=>x.category||'OTHER'))];
+ $('tabs').innerHTML=cats.map(c=>`<button class="tab ${selectedCategory===c?'active':''}" onclick="setCat('${c.replace(/'/g,"\\'")}')">${c==='ALL'?'All':catLabel(c)}</button>`).join('');
+ if(!cats.includes(selectedCategory)) selectedCategory='ALL';
 }
-function getDate(r){
-  return r.activity_date ?? r.date ?? r.mis_date ?? r.imported_at ?? "";
-}
-function objectValue(v){
-  return v && typeof v==="object" && !Array.isArray(v) ? v : {};
-}
-function firstValue(obj,keys){
-  for(const k of keys){
-    if(Object.prototype.hasOwnProperty.call(obj,k)) return obj[k];
-  }
-  return "";
-}
-function cleanNumber(v){
-  if(v===null || v===undefined || v==="") return "—";
-  if(typeof v==="number") return Number.isInteger(v)?String(v):String(Number(v.toFixed(3)));
-  return String(v);
-}
-function escapeHtml(v){
-  return String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-}
-
-function getDetailFields(r){
-  const month=objectValue(r.for_the_month);
-  const latest=objectValue(r.latest_activity);
-  // Monthly values are the primary detail source. Keep the original field names.
-  const source=Object.keys(month).length ? month : latest;
-  return Object.entries(source).filter(([k,v])=>k && v!==null && v!==undefined && v!=="");
-}
-function getClosing(r){
-  const month=objectValue(r.for_the_month);
-  const latest=objectValue(r.latest_activity);
-  const source={...latest,...month};
-  for(const k of ["Closing","CLOSING","closing"]) if(Object.prototype.hasOwnProperty.call(source,k)) return source[k];
-  return "";
-}
-function formatLabel(k){
-  return String(k).replace(/_/g," ").replace(/\s+/g," ").trim();
-}
-
-async function loadData(){
-  const msg=document.getElementById("message");
-  msg.textContent="Loading...";
-  document.getElementById("connection").textContent="Connecting...";
-
-  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-
-  const {data,error}=await db.from(TABLE_NAME).select("*").order("imported_at",{ascending:false}).limit(1000);
-
-  if(error){
-    document.getElementById("connection").textContent="Connection error";
-    msg.innerHTML='<div class="error">'+escapeHtml(error.message)+'</div>';
-    document.getElementById("groups").innerHTML="";
-    return;
-  }
-
-  rows=data||[];
-  const dates=rows.map(getDate).filter(Boolean).map(String).map(x=>x.slice(0,10)).sort();
-  if(dates.length && !document.getElementById("date").value) document.getElementById("date").value=dates[dates.length-1];
-  document.getElementById("connection").textContent="Supabase connected";
-  render();
-}
-
+function setCat(c){selectedCategory=c;renderTabs();render()}
 function render(){
-  const q=document.getElementById("search").value.trim().toLowerCase();
-  const selectedDate=document.getElementById("date").value;
-
-  const filtered=rows.filter(r=>{
-    const name=getName(r).toLowerCase();
-    const cat=getCategory(r).toLowerCase();
-    const d=String(getDate(r)).slice(0,10);
-    return (!q || name.includes(q) || cat.includes(q)) && (!selectedDate || d===selectedDate);
-  });
-
-  const uniqueMaterials=new Set(filtered.map(getName));
-  document.getElementById("materials").textContent=uniqueMaterials.size;
-
-  const dates=filtered.map(getDate).filter(Boolean).map(String).sort();
-  document.getElementById("latest").textContent=dates.length?dates[dates.length-1].slice(0,10):"—";
-
-  const grouped={};
-  filtered.forEach(r=>{
-    const cat=getCategory(r);
-    if(!grouped[cat]) grouped[cat]=[];
-    grouped[cat].push(r);
-  });
-
-  const categories=Object.keys(grouped).sort((a,b)=>a.localeCompare(b));
-  const groups=document.getElementById("groups");
-
-  if(!categories.length){
-    groups.innerHTML='<div class="empty">No materials found.</div>';
-    document.getElementById("message").textContent="0 materials";
-    return;
-  }
-
-  groups.innerHTML=categories.map(cat=>{
-    const items=grouped[cat].sort((a,b)=>getName(a).localeCompare(getName(b)));
-    return `
-      <section class="group">
-        <div class="group-title">
-          <span>${escapeHtml(cat)}</span>
-          <span class="group-count">${items.length}</span>
-        </div>
-        ${items.map((r,i)=>{
-          const closing=getClosing(r); const fields=getDetailFields(r);
-          const id="m_"+btoa(unescape(encodeURIComponent(cat+"|"+getName(r)+"|"+i))).replace(/[^a-zA-Z0-9]/g,"");
-          return `
-            <div class="material" id="${id}">
-              <button class="material-row" type="button" onclick="toggleMaterial('${id}')">
-                <span class="material-name">${escapeHtml(getName(r))}</span>
-                <span class="stock"><span class="stock-badge"><span class="stock-number">${escapeHtml(cleanNumber(closing))}</span><span class="stock-unit">STOCK</span></span></span>
-                <span class="chevron">›</span>
-              </button>
-              <div class="detail">
-                <div class="detail-grid">
-                  ${fields.map(([k,v])=>`<div class="metric"><div class="metric-label">${escapeHtml(formatLabel(k))}</div><div class="metric-value">${escapeHtml(cleanNumber(v))}</div></div>`).join("")}
-                </div>
-                <div class="detail-date">Activity: ${escapeHtml(String(getDate(r)).slice(0,10))}</div>
-              </div>
-            </div>`;
-        }).join("")}
-      </section>`;
-  }).join("");
-
-  document.getElementById("message").textContent=`${uniqueMaterials.size} material(s)`;
+ const q=$('search').value.trim().toLowerCase();
+ let data=rows.filter(x=>x.activity_date===selectedDate);
+ if(selectedCategory!=='ALL') data=data.filter(x=>(x.category||'OTHER')===selectedCategory);
+ if(q) data=data.filter(x=>String(x.sheet_name).toLowerCase().includes(q));
+ const cats=[...new Set(data.map(x=>x.category||'OTHER'))];
+ $('summary').innerHTML=`<div class="metric"><b>${data.length}</b><span>Materials</span></div><div class="metric"><b>${cats.length}</b><span>Categories</span></div><div class="metric"><b>${selectedDate||'—'}</b><span>Selected date</span></div>`;
+ if(!data.length){$('content').innerHTML='<div class="empty">No materials found for this date/category.</div>';return;}
+ const grouped={};data.forEach(x=>(grouped[x.category||'OTHER']??=[]).push(x));
+ $('content').innerHTML=Object.entries(grouped).map(([cat,list])=>`<section class="section"><h2>${catLabel(cat)} <span style="color:#9ca3af;font-weight:400">(${list.length})</span></h2><div class="grid">${list.map(card).join('')}</div></section>`).join('');
 }
-
-function toggleMaterial(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  el.classList.toggle("open");
-}
-
-document.getElementById("refresh").addEventListener("click",loadData);
-document.getElementById("search").addEventListener("input",render);
-document.getElementById("date").addEventListener("change",render);
-loadData();
+function card(x){const a=x.latest_activity||x.for_the_month||{};const c=closing(a);return `<div class="card" onclick="openModal(${JSON.stringify(x).replace(/</g,'\\u003c')})"><div class="cat">${catLabel(x.category)}</div><div class="name" title="${x.sheet_name}">${x.sheet_name}</div><div class="stock"><div><strong>${c===null?'—':fmt(c)}</strong> <small>STOCK</small></div><small>${x.activity_date}</small></div></div>`}
+function section(title,obj){if(!obj||typeof obj!=='object')return '';return `<div class="detailSection"><h3>${title}</h3><div class="details">${Object.entries(obj).map(([k,v])=>`<div class="kv"><span>${pretty(k)}</span><b>${typeof v==='number'?fmt(v):String(v??'—')}</b></div>`).join('')}</div></div>`}
+function openModal(x){$('modalName').textContent=x.sheet_name;$('modalDate').textContent=`${catLabel(x.category)} • ${x.activity_date}`;$('modalBody').innerHTML=section('Latest Activity',x.latest_activity)+section('For The Month',x.for_the_month)+section('For The Year',x.for_the_year);$('overlay').style.display='flex'}
+function closeModal(){$('overlay').style.display='none'}
+$('date').addEventListener('change',e=>{selectedDate=e.target.value;selectedCategory='ALL';renderTabs();render()});$('search').addEventListener('input',render);$('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal()});
+load();
 </script>
-</body>
-</html>
+</body></html>
