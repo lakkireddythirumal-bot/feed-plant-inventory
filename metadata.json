@@ -1,8 +1,0 @@
-{
-  "name": "Feed Plant Control Center",
-  "description": "Feed plant inventory, production, bags, and dispatch control center dashboard.",
-  "permissions": [],
-  "capabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
