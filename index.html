@@ -8,7 +8,7 @@
 :root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#e6e9ef;--accent:#2563eb;--accent2:#eff6ff;--shadow:0 8px 24px rgba(15,23,42,.06)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.wrap{max-width:1200px;margin:auto;padding:18px 20px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px}.title{font-size:22px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{font-size:12px;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px 10px;border-radius:999px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px}.title{font-size:22px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{font-size:12px;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px 10px;border-radius:999px}.clock{font-size:13px;font-weight:700;color:#374151;background:#f8fafc;border:1px solid var(--line);padding:8px 11px;border-radius:10px;white-space:nowrap}.topRight{display:flex;align-items:center;gap:8px}.viewBtn{margin-top:12px;width:100%;height:34px;border:1px solid #dbe3f0;background:#f8fafc;color:#1d4ed8;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer}.viewBtn:hover{background:#eff6ff}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.select,.search{height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 12px;font-size:14px;outline:none}.select{min-width:170px}.search{flex:1;min-width:220px}
 .tabs{display:flex;gap:8px;overflow:auto;padding:14px 0 2px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap;cursor:pointer}.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 main{max-width:1200px;margin:auto;padding:20px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}.metric b{display:block;font-size:24px}.metric span{font-size:12px;color:var(--muted)}
@@ -19,7 +19,7 @@ main{max-width:1200px;margin:auto;padding:20px}.summary{display:grid;grid-templa
 </head>
 <body>
 <header><div class="wrap">
-  <div class="top"><div><div class="title">Feed MIS Stock</div><div class="sub">Category-wise • Date-wise • Material-wise</div></div><div id="status" class="status">Connecting…</div></div>
+  <div class="top"><div><div class="title">Feed MIS Stock</div><div class="sub">Category-wise • Date-wise • Material-wise</div></div><div class="topRight"><div id="clock" class="clock">--:--:--</div><div id="status" class="status">Connecting…</div></div></div>
   <div class="controls"><select id="date" class="select"></select><input id="search" class="search" placeholder="Search material…" /></div>
   <div id="tabs" class="tabs"></div>
 </div></header>
@@ -69,11 +69,13 @@ function render(){
  const grouped={};data.forEach(x=>(grouped[x.category||'OTHER']??=[]).push(x));
  $('content').innerHTML=Object.entries(grouped).map(([cat,list])=>`<section class="section"><h2>${catLabel(cat)} <span style="color:#9ca3af;font-weight:400">(${list.length})</span></h2><div class="grid">${list.map(card).join('')}</div></section>`).join('');
 }
-function card(x){const a=x.latest_activity||x.for_the_month||{};const c=closing(a);return `<div class="card" onclick="openModal(${JSON.stringify(x).replace(/</g,'\\u003c')})"><div class="cat">${catLabel(x.category)}</div><div class="name" title="${x.sheet_name}">${x.sheet_name}</div><div class="stock"><div><strong>${c===null?'—':fmt(c)}</strong> <small>STOCK</small></div><small>${x.activity_date}</small></div></div>`}
+function card(x){const a=x.latest_activity||x.for_the_month||{};const c=closing(a);const payload=JSON.stringify(x).replace(/</g,'\\u003c').replace(/>/g,'\\u003e');return `<div class="card"><div class="cat">${catLabel(x.category)}</div><div class="name" title="${x.sheet_name}">${x.sheet_name}</div><div class="stock"><div><strong>${c===null?'—':fmt(c)}</strong> <small>STOCK</small></div><small>${x.activity_date}</small></div><button class="viewBtn" onclick='openModal(${payload});event.stopPropagation()'>View Details</button></div>`}
 function section(title,obj){if(!obj||typeof obj!=='object')return '';return `<div class="detailSection"><h3>${title}</h3><div class="details">${Object.entries(obj).map(([k,v])=>`<div class="kv"><span>${pretty(k)}</span><b>${typeof v==='number'?fmt(v):String(v??'—')}</b></div>`).join('')}</div></div>`}
 function openModal(x){$('modalName').textContent=x.sheet_name;$('modalDate').textContent=`${catLabel(x.category)} • ${x.activity_date}`;$('modalBody').innerHTML=section('Latest Activity',x.latest_activity)+section('For The Month',x.for_the_month)+section('For The Year',x.for_the_year);$('overlay').style.display='flex'}
 function closeModal(){$('overlay').style.display='none'}
 $('date').addEventListener('change',e=>{selectedDate=e.target.value;selectedCategory='ALL';renderTabs();render()});$('search').addEventListener('input',render);$('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal()});
+function updateClock(){const now=new Date();$('clock').textContent=now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});}
+updateClock();setInterval(updateClock,1000);
 load();
 </script>
 </body></html>
