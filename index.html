@@ -24,7 +24,7 @@
 <div class="wrap">
   <div class="grid">
     <div class="card"><div class="label">Total Records</div><div id="total" class="value">—</div></div>
-    <div class="card"><div class="label">Latest Date</div><div id="latest" class="value">—</div></div>
+    <div class="card"><div class="label">Latest Activity</div><div id="latest" class="value">—</div></div>
     <div class="card"><div class="label">Materials</div><div id="materials" class="value">—</div></div>
     <div class="card"><div class="label">Status</div><div id="status" class="value" style="font-size:20px">—</div></div>
   </div>
@@ -36,9 +36,7 @@
       <button id="refresh">Refresh</button>
     </div>
     <div id="message" class="status">Configure Supabase credentials, then refresh.</div>
-    <div class="table-wrap">
-      <table><thead id="thead"></thead><tbody id="tbody"></tbody></table>
-    </div>
+    <div id="groups"></div>
   </div>
 </div>
 
@@ -95,26 +93,71 @@ function render(){
   const date = document.getElementById("date").value;
 
   let filtered = rows.filter(r=>{
-    const material = String(r.material_name ?? r.material ?? r.part_name ?? "").toLowerCase();
-    const rowDate = String(r.date ?? r.mis_date ?? "").slice(0,10);
-    return (!search || material.includes(search)) && (!date || rowDate === date);
+    const material = String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "").toLowerCase();
+    const category = String(r.category ?? "").toLowerCase();
+    const rowDate = String(r.activity_date ?? r.date ?? r.mis_date ?? "").slice(0,10);
+    return (!search || material.includes(search) || category.includes(search)) &&
+           (!date || rowDate === date);
   });
 
   document.getElementById("total").textContent = filtered.length;
-  const mats = new Set(filtered.map(r=>r.material_name ?? r.material ?? r.part_name).filter(Boolean));
+  const mats = new Set(filtered.map(r=>r.sheet_name ?? r.material_name ?? r.material ?? r.part_name).filter(Boolean));
   document.getElementById("materials").textContent = mats.size;
 
-  const dates = filtered.map(r=>r.date ?? r.mis_date ?? r.created_at).filter(Boolean).sort();
+  const dates = filtered.map(r=>r.activity_date ?? r.date ?? r.mis_date ?? r.imported_at).filter(Boolean).sort();
   document.getElementById("latest").textContent = dates.length ? String(dates[dates.length-1]).slice(0,10) : "—";
 
-  const cols = filtered.length ? Object.keys(filtered[0]) : [];
-  document.getElementById("thead").innerHTML = cols.map(c=>"<th>"+escapeHtml(c)+"</th>").join("");
-  document.getElementById("tbody").innerHTML = filtered.map(r =>
-    "<tr>"+cols.map(c=>"<td>"+escapeHtml(formatValue(r[c]))+"</td>").join("")+"</tr>"
-  ).join("");
+  // Group records by category, then material/sheet name.
+  const grouped = {};
+  filtered.forEach(r=>{
+    const category = String(r.category ?? "Uncategorized").trim() || "Uncategorized";
+    const name = String(r.sheet_name ?? r.material_name ?? r.material ?? r.part_name ?? "Unnamed").trim() || "Unnamed";
+    if(!grouped[category]) grouped[category] = [];
+    grouped[category].push({name, row:r});
+  });
+
+  const categories = Object.keys(grouped).sort((a,b)=>a.localeCompare(b));
+  document.getElementById("groups").innerHTML = categories.map(category=>{
+    const items = grouped[category].sort((a,b)=>a.name.localeCompare(b.name));
+    return `
+      <section class="group">
+        <div class="group-title">
+          <span>${escapeHtml(category)}</span>
+          <span class="group-count">${items.length} material(s)</span>
+        </div>
+        ${items.map(({name,row})=>{
+          const month = row.for_the_month && typeof row.for_the_month === "object" ? row.for_the_month : {};
+          const year = row.for_the_year && typeof row.for_the_year === "object" ? row.for_the_year : {};
+          const latest = row.latest_activity && typeof row.latest_activity === "object" ? row.latest_activity : {};
+          const closing = firstValue(month, ["Closing","closing","CLOSING"]);
+          const consumption = firstValue(month, ["Consumption","CONSUMPTION","Total Consumption","TOTAL CONSUMPTION"]);
+          const receipt = firstValue(month, ["Receipt","RECEIPT","Received","RECEIVED","GAIN","Gain"]);
+          const issue = firstValue(month, ["Issue","ISSUE","Sale","SALE"]);
+          const activityDate = row.activity_date ?? row.date ?? "";
+          return `
+            <div class="material">
+              <div class="material-name">${escapeHtml(name)}</div>
+              <div class="meta">
+                <div class="metric"><span>Closing</span><b>${escapeHtml(formatValue(closing))}</b></div>
+                <div class="metric"><span>Consumption</span><b>${escapeHtml(formatValue(consumption))}</b></div>
+                <div class="metric"><span>Receipt / Gain</span><b>${escapeHtml(formatValue(receipt))}</b></div>
+                <div class="metric"><span>Issue / Sale</span><b>${escapeHtml(formatValue(issue))}</b></div>
+              </div>
+              <div class="json-extra">Date: ${escapeHtml(formatValue(activityDate))}</div>
+            </div>`;
+        }).join("")}
+      </section>`;
+  }).join("");
 
   document.getElementById("message").textContent =
-    filtered.length ? `${filtered.length} record(s) loaded.` : "No records found.";
+    filtered.length ? `${filtered.length} record(s) loaded — grouped by category and material name.` : "No records found.";
+}
+
+function firstValue(obj, keys){
+  for(const k of keys){
+    if(Object.prototype.hasOwnProperty.call(obj,k)) return obj[k];
+  }
+  return "";
 }
 
 function formatValue(v){
